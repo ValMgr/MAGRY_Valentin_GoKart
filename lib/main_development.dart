@@ -7,10 +7,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_kart/app/app.dart';
+import 'package:go_kart/app/repository/auth_repository.dart';
+import 'package:go_kart/app/services/supabase_auth_repository.dart';
 import 'package:go_kart/bootstrap.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
 
 const _requiredEnvVars = [
   'SUPABASE_URL',
@@ -30,6 +32,10 @@ Future<void> main() async {
   await Supabase.initialize(
     url: dotenv.get('SUPABASE_URL'),
     anonKey: dotenv.get('SUPABASE_ANON_KEY'),
+  );
+
+  GetIt.I.registerSingleton<AuthRepository>(
+    SupabaseAuthRepository(Supabase.instance),
   );
 
   await bootstrap(() => const App());
