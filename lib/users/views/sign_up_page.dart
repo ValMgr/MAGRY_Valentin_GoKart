@@ -1,5 +1,8 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:go_kart/app/app.dart';
 import 'package:go_kart/app/repository/auth_repository.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -24,19 +27,16 @@ class SignUpPageState extends State<SignUpPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Align(
-                alignment: Alignment.center,
                 child: Image.asset('assets/logo/round/152.png'),
               ),
               const SizedBox(height: 40),
               Align(
-                alignment: Alignment.center,
                 child: Text(
                   'Sign up to Go Kart',
                   style: Theme.of(context).textTheme.headline4,
                 ),
               ),
               Align(
-                alignment: Alignment.center,
                 child: Text(
                   'Welcome!',
                   style: Theme.of(context).textTheme.subtitle1,
@@ -71,27 +71,22 @@ Widget _signUpButton(
     onPressed: () async {
       try {
         if (email.text.isEmpty || password.text.isEmpty) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Please fill all fields'),
-            ),
+          CommonUtils.showSnackBar(
+            context,
+            'Please fill in all fields',
+            isError: true,
           );
-          return;
         } else {
           final authRepository = GetIt.I.get<AuthRepository>();
           await authRepository.signUpEmailAndPassword(
             email.text,
             password.text,
           );
-          // ignore: use_build_context_synchronously
+          CommonUtils.showSnackBar(context, 'Signed up successfully');
           Navigator.pop(context);
         }
       } catch (error) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(error.toString()),
-          ),
-        );
+        CommonUtils.showSnackBar(context, error.toString(), isError: true);
       }
     },
     child: const Text('Sign up'),

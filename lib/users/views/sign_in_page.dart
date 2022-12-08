@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:go_kart/app/app.dart';
 import 'package:go_kart/app/repository/auth_repository.dart';
 
 class SignInPage extends StatefulWidget {
@@ -24,19 +25,16 @@ class SignInPageState extends State<SignInPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Align(
-                alignment: Alignment.center,
                 child: Image.asset('assets/logo/round/152.png'),
               ),
               const SizedBox(height: 40),
               Align(
-                alignment: Alignment.center,
                 child: Text(
                   'Sign in to Go Kart',
                   style: Theme.of(context).textTheme.headline4,
                 ),
               ),
               Align(
-                alignment: Alignment.center,
                 child: Text(
                   'Welcome back!',
                   style: Theme.of(context).textTheme.subtitle1,
@@ -85,9 +83,17 @@ Widget _signInButton(
   return ElevatedButton(
     onPressed: () async {
       try {
-        await GetIt.I
-            .get<AuthRepository>()
-            .signInEmailAndPassword(email.text, password.text);
+        if (email.text.isEmpty || password.text.isEmpty) {
+          CommonUtils.showSnackBar(
+            context,
+            'Please fill in all fields',
+            isError: true,
+          );
+        } else {
+          await GetIt.I
+              .get<AuthRepository>()
+              .signInEmailAndPassword(email.text, password.text);
+        }
       } catch (error) {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text(error.toString())));

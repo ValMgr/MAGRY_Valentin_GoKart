@@ -6,6 +6,7 @@
 // https://opensource.org/licenses/MIT.
 
 export 'color_schemes.g.dart';
+export 'utils/commons_utils.dart';
 export 'view/app.dart';
 export 'view/home_page.dart';
 export 'view/splash_page.dart';
