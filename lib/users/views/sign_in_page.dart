@@ -23,9 +23,24 @@ class SignInPageState extends State<SignInPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Go Kart login form',
-                style: Theme.of(context).textTheme.headline4,
+              Align(
+                alignment: Alignment.center,
+                child: Image.asset('assets/logo/round/152.png'),
+              ),
+              const SizedBox(height: 40),
+              Align(
+                alignment: Alignment.center,
+                child: Text(
+                  'Sign in to Go Kart',
+                  style: Theme.of(context).textTheme.headline4,
+                ),
+              ),
+              Align(
+                alignment: Alignment.center,
+                child: Text(
+                  'Welcome back!',
+                  style: Theme.of(context).textTheme.subtitle1,
+                ),
               ),
               const SizedBox(height: 40),
               _emailInput(_emailController),
@@ -34,8 +49,8 @@ class SignInPageState extends State<SignInPage> {
               const SizedBox(height: 20),
               _signInButton(
                 context,
-                _emailController.text,
-                _passwordController.text,
+                _emailController,
+                _passwordController,
               ),
               const SizedBox(height: 20),
               _signUpButton(context),
@@ -62,13 +77,17 @@ Widget _passwordInput(TextEditingController controller) {
   );
 }
 
-Widget _signInButton(BuildContext context, String email, String password) {
+Widget _signInButton(
+  BuildContext context,
+  TextEditingController email,
+  TextEditingController password,
+) {
   return ElevatedButton(
     onPressed: () async {
       try {
         await GetIt.I
             .get<AuthRepository>()
-            .signInEmailAndPassword(email, password);
+            .signInEmailAndPassword(email.text, password.text);
       } catch (error) {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text(error.toString())));
@@ -86,6 +105,6 @@ Widget _signUpButton(BuildContext context) {
     onPressed: () {
       Navigator.pushNamed(context, '/sign-up');
     },
-    child: const Text('Sign up'),
+    child: const Text('New ? Sign up \u2192'),
   );
 }

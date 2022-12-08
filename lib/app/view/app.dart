@@ -11,7 +11,6 @@ import 'package:go_kart/app/view/home_page.dart';
 import 'package:go_kart/app/view/splash_page.dart';
 import 'package:go_kart/users/views/sign_in_page.dart';
 import 'package:go_kart/users/views/sign_up_page.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class App extends StatefulWidget {
@@ -23,6 +22,7 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   final _supabase = Supabase.instance.client;
+  final _navigatorKey = GlobalKey<NavigatorState>();
 
   @override
   void initState() {
@@ -30,9 +30,9 @@ class _AppState extends State<App> {
 
     _supabase.auth.onAuthStateChange.listen((data) {
       if (data.event == AuthChangeEvent.signedIn) {
-        Navigator.pushReplacementNamed(context, '/home');
+        _navigatorKey.currentState?.pushReplacementNamed('/home');
       } else if (data.event == AuthChangeEvent.signedOut) {
-        Navigator.pushReplacementNamed(context, '/sign-in');
+        _navigatorKey.currentState?.pushReplacementNamed('/sign-in');
       }
     });
   }
@@ -40,9 +40,10 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Kirac',
       theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
       darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
+      navigatorKey: _navigatorKey,
       initialRoute: '/',
       routes: {
         '/': (context) => const SplashScreenPage(),

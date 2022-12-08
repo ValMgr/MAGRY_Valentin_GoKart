@@ -23,9 +23,24 @@ class SignUpPageState extends State<SignUpPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                'Go Kart register form',
-                style: Theme.of(context).textTheme.headline4,
+              Align(
+                alignment: Alignment.center,
+                child: Image.asset('assets/logo/round/152.png'),
+              ),
+              const SizedBox(height: 40),
+              Align(
+                alignment: Alignment.center,
+                child: Text(
+                  'Sign up to Go Kart',
+                  style: Theme.of(context).textTheme.headline4,
+                ),
+              ),
+              Align(
+                alignment: Alignment.center,
+                child: Text(
+                  'Welcome!',
+                  style: Theme.of(context).textTheme.subtitle1,
+                ),
               ),
               const SizedBox(height: 40),
               _emailInput(_emailController),
@@ -34,8 +49,8 @@ class SignUpPageState extends State<SignUpPage> {
               const SizedBox(height: 20),
               _signUpButton(
                 context,
-                _emailController.text,
-                _passwordController.text,
+                _emailController,
+                _passwordController,
               ),
               const SizedBox(height: 20),
               _backButton(context),
@@ -47,13 +62,30 @@ class SignUpPageState extends State<SignUpPage> {
   }
 }
 
-Widget _signUpButton(BuildContext context, String email, String password) {
+Widget _signUpButton(
+  BuildContext context,
+  TextEditingController email,
+  TextEditingController password,
+) {
   return ElevatedButton(
     onPressed: () async {
       try {
-        await GetIt.I
-            .get<AuthRepository>()
-            .signUpEmailAndPassword(email, password);
+        if (email.text.isEmpty || password.text.isEmpty) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Please fill all fields'),
+            ),
+          );
+          return;
+        } else {
+          final authRepository = GetIt.I.get<AuthRepository>();
+          await authRepository.signUpEmailAndPassword(
+            email.text,
+            password.text,
+          );
+          // ignore: use_build_context_synchronously
+          Navigator.pop(context);
+        }
       } catch (error) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

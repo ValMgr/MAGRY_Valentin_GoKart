@@ -16,6 +16,7 @@ class _HomePageState extends State<HomePage> {
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
@@ -35,7 +36,7 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-void _signOut() async {
+Future<void> _signOut() async {
   try {
     await Supabase.instance.client.auth.signOut();
   } catch (e) {

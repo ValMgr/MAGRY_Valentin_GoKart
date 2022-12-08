@@ -5,5 +5,7 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
+export 'color_schemes.g.dart';
 export 'view/app.dart';
+export 'view/home_page.dart';
 export 'view/splash_page.dart';

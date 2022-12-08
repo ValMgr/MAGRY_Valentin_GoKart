@@ -16,10 +16,9 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   get_it: ^7.2.0
-  google_fonts: ^3.0.1
   injectable: ^2.0.0
   intl: ^0.17.0
-  supabase_flutter: ^1.0.0
+  supabase_flutter: ^1.2.2
 
 dev_dependencies:
   bloc_test: ^9.1.0
@@ -34,4 +33,5 @@ flutter:
   generate: true
   assets:
     - .env
-    - assets/
+    - assets/logo/round/
+    - assets/logo/square/
