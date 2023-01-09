@@ -4,6 +4,8 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
+  static Page<void> page() => const MaterialPage<void>(child: HomePage());
+
   @override
   State<HomePage> createState() => _HomePageState();
 }

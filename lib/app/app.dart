@@ -5,8 +5,7 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
+export 'bloc/app_bloc.dart';
 export 'color_schemes.g.dart';
-export 'utils/commons_utils.dart';
+export 'routes/routes.dart';
 export 'view/app.dart';
-export 'view/home_page.dart';
-export 'view/splash_page.dart';
