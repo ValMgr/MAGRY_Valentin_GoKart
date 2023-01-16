@@ -3,6 +3,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:form_inputs/form_inputs.dart';
 import 'package:formz/formz.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 part 'signup_state.dart';
 
@@ -63,11 +64,11 @@ class SignUpCubit extends Cubit<SignUpState> {
         password: state.password.value,
       );
       emit(state.copyWith(status: FormzStatus.submissionSuccess));
-    } on Exception {
+    } on AuthException catch (e) {
       emit(
         state.copyWith(
           status: FormzStatus.submissionFailure,
-          errorMessage: 'Sign up failure',
+          errorMessage: e.message,
         ),
       );
     }
