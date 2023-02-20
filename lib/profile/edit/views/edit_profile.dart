@@ -48,7 +48,7 @@ class _EditProfileState extends State<EditProfile> {
                 const Text('Edit Profile'),
                 const SizedBox(height: 16),
                 _avatarEditField(
-                  profile.avatar!,
+                  profile.avatar,
                   Theme.of(context).colorScheme.primary,
                 ),
                 const SizedBox(height: 16),
