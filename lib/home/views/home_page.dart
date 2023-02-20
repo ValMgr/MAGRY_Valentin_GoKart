@@ -24,7 +24,12 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<HomeCubit, HomeState>(
       builder: (context, state) => Scaffold(
-        appBar: AppBar(title: const Text('Home')),
+        appBar: AppBar(
+          title: const Text('Home'),
+          actions: const <Widget>[
+            SettingsButton(),
+          ],
+        ),
         bottomNavigationBar:
             AppBottomNavigationBar(currentIndex: state.currentPage),
         body: const HomeRouter(),
