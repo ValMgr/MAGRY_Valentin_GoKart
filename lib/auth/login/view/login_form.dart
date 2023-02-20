@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
-import 'package:go_kart/login/login.dart';
-import 'package:go_kart/signup/signup.dart';
+import 'package:go_kart/auth/login/login.dart';
+import 'package:go_kart/auth/signup/signup.dart';
 
 class LoginForm extends StatelessWidget {
   const LoginForm({super.key});

@@ -518,6 +518,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.2.4"
+  profile_repository:
+    dependency: "direct main"
+    description:
+      path: "packages/profile_repository"
+      relative: true
+    source: path
+    version: "1.0.0+1"
   provider:
     dependency: transitive
     description:
@@ -532,6 +539,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.1"
+  quickalert:
+    dependency: "direct main"
+    description:
+      name: quickalert
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
   realtime_client:
     dependency: transitive
     description:

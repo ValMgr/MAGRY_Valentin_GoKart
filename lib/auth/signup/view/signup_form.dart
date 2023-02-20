@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
-import 'package:go_kart/signup/cubit/signup_cubit.dart';
+import 'package:go_kart/auth/signup/cubit/signup_cubit.dart';
 
 class SignUpForm extends StatelessWidget {
   const SignUpForm({super.key});
@@ -120,10 +120,10 @@ class _SignUpButton extends StatelessWidget {
             ? const CircularProgressIndicator()
             : ElevatedButton(
                 key: const Key('signupForm_continue_raisedButton'),
-                child: const Text('Sign up !'),
                 onPressed: state.status.isValidated
                     ? () => context.read<SignUpCubit>().signUpFormSubmitted()
                     : null,
+                child: const Text('Sign up !'),
               );
       },
     );

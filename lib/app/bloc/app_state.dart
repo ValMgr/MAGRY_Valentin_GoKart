@@ -8,7 +8,7 @@ enum AppStatus {
 class AppState extends Equatable {
   const AppState._({
     this.status = AppStatus.unauthenticated,
-    this.user,
+    this.user = User.empty,
   });
 
   const AppState.authenticated(User user)

@@ -3,7 +3,7 @@
 import 'dart:async';
 
 import 'package:authentication_repository/authentication_repository.dart';
-import 'package:cache/cache.dart';
+// import 'package:cache/cache.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' as supabase_auth;
 
 /// {@template authentication_repository}
@@ -12,12 +12,12 @@ import 'package:supabase_flutter/supabase_flutter.dart' as supabase_auth;
 class AuthenticationRepository {
   /// {@macro authentication_repository}
   AuthenticationRepository({
-    CacheClient? cache,
+    // CacheClient? cache,
     supabase_auth.Supabase? supabase,
-  })  : _cache = cache ?? CacheClient(),
-        supabase = supabase ?? supabase_auth.Supabase.instance;
+  }) : supabase = supabase ?? supabase_auth.Supabase.instance;
+  // _cache = cache ?? CacheClient();
 
-  final CacheClient _cache;
+  // final CacheClient _cache;
 
   /// The supabase instance
   final supabase_auth.Supabase supabase;
@@ -54,7 +54,9 @@ class AuthenticationRepository {
         email: email,
         password: password,
       );
-      await supabase.client.from('profil').insert({'id': res.session!.user.id});
+      await supabase.client
+          .from('profile')
+          .insert({'id': res.session!.user.id, 'email': email});
     } on supabase_auth.AuthException {
       rethrow;
     }
