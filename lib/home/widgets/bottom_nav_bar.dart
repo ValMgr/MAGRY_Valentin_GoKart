@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_kart/app/app.dart';
 import 'package:go_kart/home/home.dart';
 
 class AppBottomNavigationBar extends StatelessWidget {
@@ -9,22 +10,30 @@ class AppBottomNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isAdmin = context.read<AppBloc>().state.isAdmin;
+
     return BottomNavigationBar(
       currentIndex: currentIndex,
       onTap: (index) => context.read<HomeCubit>().changePage(index),
-      items: const [
-        BottomNavigationBarItem(
+      type: BottomNavigationBarType.fixed,
+      items: [
+        const BottomNavigationBarItem(
           icon: Icon(Icons.flag_rounded),
           label: 'Session',
         ),
-        BottomNavigationBarItem(
+        const BottomNavigationBarItem(
           icon: Icon(Icons.home),
           label: 'Home',
         ),
-        BottomNavigationBarItem(
+        const BottomNavigationBarItem(
           icon: Icon(Icons.stacked_bar_chart_sharp),
           label: 'Progression',
         ),
+        if (isAdmin)
+          const BottomNavigationBarItem(
+            icon: Icon(Icons.all_inclusive),
+            label: 'Circuits',
+          ),
       ],
     );
   }

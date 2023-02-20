@@ -25,10 +25,14 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   final AuthenticationRepository _authenticationRepository;
   late final StreamSubscription<User> _userSubscription;
 
-  void _onUserChanged(_AppUserChanged event, Emitter<AppState> emit) {
+  void _onUserChanged(_AppUserChanged event, Emitter<AppState> emit) async {
+    // ignore: avoid_bool_literals_in_conditional_expressions
+    final isAdmin = event.user.isNotEmpty
+        ? await _authenticationRepository.isUserAdmin(event.user.id)
+        : false;
     emit(
       event.user.isNotEmpty
-          ? AppState.authenticated(event.user)
+          ? AppState.authenticated(event.user, isAdmin: isAdmin)
           : const AppState.unauthenticated(),
     );
   }

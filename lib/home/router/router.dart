@@ -16,6 +16,8 @@ class HomeRouter extends StatelessWidget {
             return const HomeContent();
           case 2:
             return const Text('Charts page');
+          case 3:
+            return const Text('Circuits page');
           default:
             return const HomeContent();
         }

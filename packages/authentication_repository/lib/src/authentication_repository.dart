@@ -79,6 +79,17 @@ class AuthenticationRepository {
     }
   }
 
+  /// Checks if the user is an admin
+  Future<bool> isUserAdmin(String userId) async {
+    final admin = await supabase.client
+        .from('admins')
+        .select()
+        .eq('user_id', userId)
+        .maybeSingle();
+
+    return admin != null;
+  }
+
   /// Signs out the current user which will emit
   /// [User.empty] from the [user] Stream.
   ///
