@@ -23,7 +23,7 @@ class Profile extends Equatable {
       avatar: data['avatar'] as String?,
       firstname: data['firstname'] as String?,
       lastname: data['lastname'] as String?,
-      birthday: data['birthday'] as DateTime?,
+      birthday: DateTime.tryParse(data['birthday'] as String? ?? ''),
       isSetup: data['is_setup'] as bool,
     );
   }
