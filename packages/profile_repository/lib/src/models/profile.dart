@@ -28,6 +28,19 @@ class Profile extends Equatable {
     );
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'email': email,
+      'username': username,
+      'avatar': avatar,
+      'firstname': firstname,
+      'lastname': lastname,
+      'birthday': birthday!.toIso8601String(),
+      'is_setup': isSetup,
+    };
+  }
+
   final String id;
   final String email;
   final String? username;
@@ -48,19 +61,6 @@ class Profile extends Equatable {
   bool get isNotEmpty => this != Profile.empty;
 
   bool get isSetupCompleted => isSetup;
-
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'email': email,
-      'username': username,
-      'avatar': avatar,
-      'firstname': firstname,
-      'lastname': lastname,
-      'birthday': birthday!.toIso8601String(),
-      'is_setup': isSetup,
-    };
-  }
 
   @override
   List<Object?> get props =>

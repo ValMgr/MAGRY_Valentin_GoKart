@@ -12,14 +12,26 @@ class AppState extends Equatable {
     this.isAdmin = false,
   });
 
-  const AppState.authenticated(User user, {bool isAdmin = false})
-      : this._(status: AppStatus.authenticated, user: user, isAdmin: isAdmin);
+  const AppState.authenticated(User user)
+      : this._(status: AppStatus.authenticated, user: user);
 
   const AppState.unauthenticated() : this._(status: AppStatus.unauthenticated);
 
   final AppStatus status;
   final User? user;
   final bool isAdmin;
+
+  AppState copyWith({
+    AppStatus? status,
+    User? user,
+    bool? isAdmin,
+  }) {
+    return AppState._(
+      status: status ?? this.status,
+      user: user ?? this.user,
+      isAdmin: isAdmin ?? this.isAdmin,
+    );
+  }
 
   @override
   List<Object> get props => [status];

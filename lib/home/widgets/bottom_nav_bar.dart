@@ -10,31 +10,42 @@ class AppBottomNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isAdmin = context.read<AppBloc>().state.isAdmin;
+    final pageName = [
+      'Session',
+      'Home',
+      'Progression',
+      'Circuits',
+    ];
 
-    return BottomNavigationBar(
-      currentIndex: currentIndex,
-      onTap: (index) => context.read<HomeCubit>().changePage(index),
-      type: BottomNavigationBarType.fixed,
-      items: [
-        const BottomNavigationBarItem(
-          icon: Icon(Icons.flag_rounded),
-          label: 'Session',
-        ),
-        const BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: 'Home',
-        ),
-        const BottomNavigationBarItem(
-          icon: Icon(Icons.stacked_bar_chart_sharp),
-          label: 'Progression',
-        ),
-        if (isAdmin)
-          const BottomNavigationBarItem(
-            icon: Icon(Icons.all_inclusive),
-            label: 'Circuits',
-          ),
-      ],
+    return BlocBuilder<AppBloc, AppState>(
+      builder: (context, state) {
+        return BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          currentIndex: currentIndex,
+          onTap: (index) {
+            context.read<HomeCubit>().changePage(index, pageName[index]);
+          },
+          items: [
+            BottomNavigationBarItem(
+              icon: const Icon(Icons.timer_rounded),
+              label: pageName[0],
+            ),
+            BottomNavigationBarItem(
+              icon: const Icon(Icons.home_rounded),
+              label: pageName[1],
+            ),
+            BottomNavigationBarItem(
+              icon: const Icon(Icons.show_chart_rounded),
+              label: pageName[2],
+            ),
+            if (context.read<AppBloc>().state.isAdmin)
+              BottomNavigationBarItem(
+                icon: const Icon(Icons.all_inclusive_rounded),
+                label: pageName[3],
+              ),
+          ],
+        );
+      },
     );
   }
 }

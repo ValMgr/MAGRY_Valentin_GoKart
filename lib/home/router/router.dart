@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_kart/circuits/circuits.dart';
 import 'package:go_kart/home/home.dart';
 
 class HomeRouter extends StatelessWidget {
@@ -17,7 +18,7 @@ class HomeRouter extends StatelessWidget {
           case 2:
             return const Text('Charts page');
           case 3:
-            return const Text('Circuits page');
+            return const CircuitsPage();
           default:
             return const HomeContent();
         }

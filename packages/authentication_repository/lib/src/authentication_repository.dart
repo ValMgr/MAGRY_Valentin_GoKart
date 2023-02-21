@@ -3,7 +3,6 @@
 import 'dart:async';
 
 import 'package:authentication_repository/authentication_repository.dart';
-// import 'package:cache/cache.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' as supabase_auth;
 
 /// {@template authentication_repository}

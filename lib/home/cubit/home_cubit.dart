@@ -6,7 +6,7 @@ part 'home_state.dart';
 class HomeCubit extends Cubit<HomeState> {
   HomeCubit() : super(const HomeState());
 
-  void changePage(int page) {
-    emit(state.copyWith(currentPage: page));
+  void changePage(int page, String pageName) {
+    emit(state.copyWith(currentPage: page, pageName: pageName));
   }
 }

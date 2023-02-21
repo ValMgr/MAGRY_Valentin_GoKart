@@ -11,6 +11,8 @@ dependencies:
   authentication_repository:
     path: packages/authentication_repository
   bloc: ^8.1.0
+  circuit_repository:
+    path: packages/circuit_repository
   equatable: ^2.0.3
   flow_builder: ^0.0.9
   flutter:

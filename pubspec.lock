@@ -106,6 +106,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.1"
+  circuit_repository:
+    dependency: "direct main"
+    description:
+      path: "packages/circuit_repository"
+      relative: true
+    source: path
+    version: "1.0.0+1"
   clock:
     dependency: transitive
     description:
