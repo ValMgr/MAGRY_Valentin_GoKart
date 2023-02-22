@@ -28,18 +28,18 @@ class CircuitContent extends StatelessWidget {
 
         return Scaffold(
           floatingActionButton: FloatingActionButton(
-            onPressed: () => context.read<CircuitsCubit>().getCircuits(),
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute<CreateCircuitPage>(
+                builder: (context) => const CreateCircuitPage(),
+              ),
+            ),
             child: const Icon(Icons.add),
           ),
-          body: ListView.builder(
-            itemCount: state.circuits.length,
-            itemBuilder: (context, index) {
-              final circuit = state.circuits[index];
-              return ListTile(
-                title: Text(circuit.name),
-                subtitle: Text(circuit.location),
-              );
-            },
+          body: const SafeArea(
+            child: Padding(
+              padding: EdgeInsets.all(8),
+              child: CircuitsList(),
+            ),
           ),
         );
       },

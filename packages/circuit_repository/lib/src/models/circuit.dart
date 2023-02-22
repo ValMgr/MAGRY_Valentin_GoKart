@@ -4,14 +4,16 @@ import 'package:equatable/equatable.dart';
 
 class Circuit extends Equatable {
   const Circuit({
-    required this.id,
+    this.id,
     required this.name,
     required this.location,
+    required this.address,
     required this.country,
+    required this.countryCode,
     required this.lat,
     required this.lng,
     required this.length,
-    required this.turns,
+    required this.corners,
     required this.email,
     required this.telephone,
     required this.website,
@@ -20,14 +22,16 @@ class Circuit extends Equatable {
   /// Creates a new [Circuit] from a JSON object.
   factory Circuit.fromJson(dynamic data) {
     return Circuit(
-      id: data['id'] as int,
+
       name: data['name'] as String,
       location: data['location'] as String,
+      address: data['address'] as String,
       country: data['country'] as String,
+      countryCode: data['country_code'] as String,
       lat: data['lat'] as double,
       lng: data['lng'] as double,
       length: data['length'] as int,
-      turns: data['turns'] as int,
+      corners: data['corners'] as int,
       email: data['email'] as String,
       telephone: data['telephone'] as String,
       website: data['website'] as String,
@@ -46,38 +50,43 @@ class Circuit extends Equatable {
       'name': name,
       'location': location,
       'country': country,
+      'country_code': countryCode,
+      'address': address,
       'lat': lat,
       'lng': lng,
       'length': length,
-      'turns': turns,
+      'corners': corners,
       'email': email,
       'telephone': telephone,
       'website': website,
     };
   }
 
-  final int id;
+  final int? id;
   final String name;
   final String location;
   final String country;
+  final String countryCode;
+  final String address;
   final double lat;
   final double lng;
   final int length;
-  final int turns;
+  final int corners;
   final String email;
   final String telephone;
   final String website;
 
   @override
   List<Object> get props => [
-        id,
         name,
         location,
+        address,
         country,
+        countryCode,
         lat,
         lng,
         length,
-        turns,
+        corners,
         email,
         telephone,
         website,

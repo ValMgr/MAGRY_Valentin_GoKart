@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:bloc/bloc.dart';
@@ -19,6 +20,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     on<AppLogoutRequested>(_onLogoutRequested);
     _userSubscription = authenticationRepository.user.listen((user) {
       add(_AppUserChanged(user));
+      isUserAdmin();
     });
     isUserAdmin();
   }
@@ -39,8 +41,16 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   }
 
   Future<void> isUserAdmin() async {
+    if (_authenticationRepository.currentUser.isEmpty) {
+      return;
+    }
+
     final isAdmin = await _authenticationRepository
         .isUserAdmin(_authenticationRepository.currentUser.id);
+
+    // Wait for the state to be updated
+    // @todo Find a better way to do this
+    sleep(const Duration(milliseconds: 100));
     emit(state.copyWith(isAdmin: isAdmin));
   }
 

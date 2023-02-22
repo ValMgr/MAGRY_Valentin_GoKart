@@ -1,22 +1,45 @@
+import 'package:country_flags/country_flags.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_kart/circuits/circuits.dart';
+import 'package:go_kart/circuits/list/views/circuit_information.dart';
 
 class CircuitsList extends StatelessWidget {
   const CircuitsList({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.all(8),
-        child: Align(
-          alignment: const Alignment(0, -1 / 3),
-          child: Column(
-            children: const [
-              Text('Circuits list'),
-            ],
+    final circuits = context.read<CircuitsCubit>().state.circuits;
+
+    return ListView.builder(
+      itemCount: circuits.length,
+      itemBuilder: (context, index) {
+        final circuit = circuits[index];
+        return ListTile(
+          leading: CountryFlags.flag(
+            circuit.countryCode,
+            height: 32,
+            width: 32,
+            borderRadius: 8,
           ),
-        ),
-      ),
+          title: Text(circuit.name),
+          subtitle: Text('${circuit.location} - ${circuit.country}'),
+          onTap: () => Navigator.of(context).push(
+            MaterialPageRoute<CircuitInformations>(
+              builder: (context) => CircuitInformations(circuit: circuit),
+            ),
+          ),
+        );
+      },
     );
+  }
+}
+
+Widget GetCountryFlag(String country) {
+  switch (country) {
+    case 'France':
+      return Image.asset('icons/flags/png/fr.png', package: 'country_icons');
+    default:
+      return const SizedBox();
   }
 }

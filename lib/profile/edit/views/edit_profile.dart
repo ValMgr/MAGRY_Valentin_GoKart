@@ -133,11 +133,10 @@ Widget _lastnameEditField(String? lastname, Function onChange) {
 
 Widget _birthdayEditField(DateTime? birthday, Function onChange) {
   return InputDatePickerFormField(
-    fieldLabelText: 'Birthday',
+    fieldLabelText: 'Birthdayyyy',
     firstDate: DateTime(1900),
     lastDate: DateTime(2100),
     initialDate: birthday ?? DateTime.now(),
     onDateSubmitted: (value) => onChange(value),
-    onDateSaved: (value) => onChange(value),
   );
 }
