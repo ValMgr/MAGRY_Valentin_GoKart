@@ -9,6 +9,8 @@ class CircuitsCubit extends Cubit<CircuitsListState> {
 
   final CircuitRepository _circuitRepository;
 
+  // @TODO - Update list when navigator pop 
+  // from circuit detail page or circuit create page
   Future<void> getCircuits() async {
     try {
       final circuits = await _circuitRepository.getAllCircuits();

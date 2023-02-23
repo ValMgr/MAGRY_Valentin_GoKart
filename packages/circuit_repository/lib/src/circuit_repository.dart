@@ -54,21 +54,24 @@ class CircuitRepository {
   }
 
   /// Create a new [Circuit].
-  Future<Circuit?> createCircuit(Circuit circuit) async {
+  Future<void> createCircuit(Circuit circuit) async {
     try {
-      final newCircuit = await _supabaseClient
-          .from('circuit')
-          .insert(circuit.toJson())
-          .single();
+      final data = circuit.copyWith(
+        createdAt: DateTime.now().toString(),
+        createdBy: _supabaseClient.auth.currentUser!.id,
+      );
+      print(data.toJson());
+
+      await _supabaseClient.from('circuit').insert(data.toJson()).single();
     } catch (e) {
       rethrow;
     }
   }
 
   /// Update an existing [Circuit].
-  Future<Circuit?> updateCircuit(Circuit circuit) async {
+  Future<void> updateCircuit(Circuit circuit) async {
     try {
-      final updatedCircuit = await _supabaseClient
+      await _supabaseClient
           .from('circuit')
           .update(circuit.toJson())
           .eq('id', circuit.id)

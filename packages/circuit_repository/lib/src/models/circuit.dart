@@ -5,6 +5,8 @@ import 'package:equatable/equatable.dart';
 class Circuit extends Equatable {
   const Circuit({
     this.id,
+    this.createdAt,
+    this.createdBy,
     required this.name,
     required this.location,
     required this.address,
@@ -22,7 +24,7 @@ class Circuit extends Equatable {
   /// Creates a new [Circuit] from a JSON object.
   factory Circuit.fromJson(dynamic data) {
     return Circuit(
-
+      id: data['id'] as int,
       name: data['name'] as String,
       location: data['location'] as String,
       address: data['address'] as String,
@@ -35,18 +37,19 @@ class Circuit extends Equatable {
       email: data['email'] as String,
       telephone: data['telephone'] as String,
       website: data['website'] as String,
+      createdAt: data['created_at'] as String,
+      createdBy: data['created_by'] as String,
     );
   }
 
   /// Creates a list of [Circuit]s from a decoded JSON object list.
   static List<Circuit> fromJsonList(List<dynamic> jsonList) {
-    return jsonList.map((data) => Circuit.fromJson(data)).toList();
+    return jsonList.map(Circuit.fromJson).toList();
   }
 
   /// Converts a [Circuit] instance to the JSON representation.
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
       'name': name,
       'location': location,
       'country': country,
@@ -59,10 +62,14 @@ class Circuit extends Equatable {
       'email': email,
       'telephone': telephone,
       'website': website,
+      'created_at': createdAt,
+      'created_by': createdBy,
     };
   }
 
   final int? id;
+  final String? createdAt;
+  final String? createdBy;
   final String name;
   final String location;
   final String country;
@@ -75,6 +82,42 @@ class Circuit extends Equatable {
   final String email;
   final String telephone;
   final String website;
+
+  Circuit copyWith({
+    int? id,
+    String? createdAt,
+    String? createdBy,
+    String? name,
+    String? location,
+    String? country,
+    String? countryCode,
+    String? address,
+    double? lat,
+    double? lng,
+    int? length,
+    int? corners,
+    String? email,
+    String? telephone,
+    String? website,
+  }) {
+    return Circuit(
+      id: id ?? this.id,
+      createdAt: createdAt ?? this.createdAt,
+      createdBy: createdBy ?? this.createdBy,
+      name: name ?? this.name,
+      location: location ?? this.location,
+      country: country ?? this.country,
+      countryCode: countryCode ?? this.countryCode,
+      address: address ?? this.address,
+      lat: lat ?? this.lat,
+      lng: lng ?? this.lng,
+      length: length ?? this.length,
+      corners: corners ?? this.corners,
+      email: email ?? this.email,
+      telephone: telephone ?? this.telephone,
+      website: website ?? this.website,
+    );
+  }
 
   @override
   List<Object> get props => [

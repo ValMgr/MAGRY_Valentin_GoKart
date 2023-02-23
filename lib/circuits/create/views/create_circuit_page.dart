@@ -16,8 +16,7 @@ class CreateCircuitPage extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(8),
           child: BlocProvider(
-            create: (_) =>
-                CreateCircuitCubit(context.read<CircuitRepository>()),
+            create: (_) => CreateCircuitCubit(CircuitRepository()),
             child: const CreateCircuitForm(),
           ),
         ),
