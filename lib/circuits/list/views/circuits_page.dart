@@ -9,9 +9,14 @@ class CircuitsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => CircuitsCubit(CircuitRepository())..getCircuits(),
-      child: const CircuitContent(),
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: BlocProvider(
+          create: (_) => CircuitsCubit(CircuitRepository())..getCircuits(),
+          child: const CircuitContent(),
+        ),
+      ),
     );
   }
 }
@@ -52,12 +57,7 @@ class CircuitContent extends StatelessWidget {
             ),
             child: const Icon(Icons.add),
           ),
-          body: const SafeArea(
-            child: Padding(
-              padding: EdgeInsets.all(8),
-              child: CircuitsList(),
-            ),
-          ),
+          body: const CircuitsList(),
         );
       },
     );

@@ -14,7 +14,7 @@ class CreateCircuitPage extends StatelessWidget {
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.all(16),
           child: BlocProvider(
             create: (_) => CreateCircuitCubit(CircuitRepository()),
             child: const CreateCircuitForm(),

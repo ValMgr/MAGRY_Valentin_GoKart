@@ -31,6 +31,8 @@ dependencies:
   profile_repository:
     path: packages/profile_repository
   quickalert: ^1.0.1
+  session_repository:
+    path: packages/session_repository
   supabase_flutter: ^1.2.2
 
 dev_dependencies:
