@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_kart/circuits/circuits.dart';
+import 'package:quickalert/quickalert.dart';
 
 class CreateCircuitForm extends StatelessWidget {
   const CreateCircuitForm({super.key});
@@ -10,13 +11,12 @@ class CreateCircuitForm extends StatelessWidget {
     return BlocListener<CreateCircuitCubit, CreateCircuitState>(
       listener: (context, state) {
         if (state.failureMessage != null) {
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-              SnackBar(
-                content: Text(state.failureMessage!),
-              ),
-            );
+          QuickAlert.show(
+            context: context,
+            title: 'Error',
+            text: state.failureMessage,
+            type: QuickAlertType.error,
+          );
         }
       },
       child: Form(

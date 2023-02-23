@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:go_kart/auth/signup/cubit/signup_cubit.dart';
+import 'package:quickalert/quickalert.dart';
 
 class SignUpForm extends StatelessWidget {
   const SignUpForm({super.key});
@@ -13,13 +14,14 @@ class SignUpForm extends StatelessWidget {
         if (state.status.isSubmissionSuccess) {
           Navigator.of(context).pop();
         } else if (state.status.isSubmissionFailure) {
-          ScaffoldMessenger.of(context)
-            ..hideCurrentMaterialBanner()
-            ..showSnackBar(
-              SnackBar(
-                content: Text(state.errorMessage ?? 'Sign Up Failure'),
-              ),
-            );
+          ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+
+          QuickAlert.show(
+            context: context,
+            title: 'Error',
+            text: state.errorMessage ?? 'Authentication Failure',
+            type: QuickAlertType.error,
+          );
         }
       },
       child: Scaffold(

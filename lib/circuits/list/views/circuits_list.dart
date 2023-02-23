@@ -34,12 +34,3 @@ class CircuitsList extends StatelessWidget {
     );
   }
 }
-
-Widget GetCountryFlag(String country) {
-  switch (country) {
-    case 'France':
-      return Image.asset('icons/flags/png/fr.png', package: 'country_icons');
-    default:
-      return const SizedBox();
-  }
-}

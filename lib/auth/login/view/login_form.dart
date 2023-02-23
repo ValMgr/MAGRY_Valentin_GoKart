@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 import 'package:go_kart/auth/login/login.dart';
 import 'package:go_kart/auth/signup/signup.dart';
+import 'package:quickalert/quickalert.dart';
 
 class LoginForm extends StatelessWidget {
   const LoginForm({super.key});
@@ -12,13 +13,12 @@ class LoginForm extends StatelessWidget {
     return BlocListener<LoginCubit, LoginState>(
       listener: (context, state) {
         if (state.status.isSubmissionFailure) {
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-              SnackBar(
-                content: Text(state.errorMessage ?? 'Authentication Failure'),
-              ),
-            );
+          QuickAlert.show(
+            context: context,
+            title: 'Error',
+            text: state.errorMessage ?? 'Authentication Failure',
+            type: QuickAlertType.error,
+          );
         }
       },
       child: Scaffold(

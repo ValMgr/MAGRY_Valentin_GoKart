@@ -13,6 +13,7 @@ class CircuitInformations extends StatelessWidget {
         title: Text(circuit.name),
       ),
       floatingActionButton: FloatingActionButton(
+        // @TODO - Update circuit informations
         onPressed: () => print('edit circuit'),
         child: const Icon(Icons.edit),
       ),

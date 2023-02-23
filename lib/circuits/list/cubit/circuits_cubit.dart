@@ -9,9 +9,10 @@ class CircuitsCubit extends Cubit<CircuitsListState> {
 
   final CircuitRepository _circuitRepository;
 
-  // @TODO - Update list when navigator pop 
+  // @TODO - Update list when navigator pop
   // from circuit detail page or circuit create page
   Future<void> getCircuits() async {
+    emit(const CircuitsListState(status: CircuitsListStatus.loading));
     try {
       final circuits = await _circuitRepository.getAllCircuits();
 
@@ -20,9 +21,18 @@ class CircuitsCubit extends Cubit<CircuitsListState> {
         return;
       }
 
-      emit(CircuitsListState(circuits: circuits));
-    } on Exception catch (_) {
-      emit(const CircuitsListState());
+      emit(
+        CircuitsListState(
+          circuits: circuits,
+          status: CircuitsListStatus.success,
+        ),
+      );
+    } on Exception catch (error) {
+      emit(
+        CircuitsListState(
+            errorMessages: error.toString(),
+            status: CircuitsListStatus.failure),
+      );
     }
   }
 }

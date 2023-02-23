@@ -2,6 +2,7 @@ import 'package:circuit_repository/circuit_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_kart/circuits/circuits.dart';
+import 'package:quickalert/quickalert.dart';
 
 class CircuitsPage extends StatelessWidget {
   const CircuitsPage({super.key});
@@ -20,10 +21,26 @@ class CircuitContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CircuitsCubit, CircuitsListState>(
+    return BlocConsumer<CircuitsCubit, CircuitsListState>(
+      listener: (context, state) {
+        if (state.status == CircuitsListStatus.failure) {
+          QuickAlert.show(
+            context: context,
+            title: 'Error',
+            text: state.errorMessages!,
+            type: QuickAlertType.error,
+          );
+        }
+      },
       builder: (context, state) {
-        if (state.circuits.isEmpty) {
+        if (state.circuits.isEmpty &&
+            state.status == CircuitsListStatus.loading) {
           return const Center(child: CircularProgressIndicator());
+        }
+
+        if (state.circuits.isEmpty &&
+            state.status == CircuitsListStatus.failure) {
+          return const Center(child: Text('Something went wrong'));
         }
 
         return Scaffold(
