@@ -1,4 +1,7 @@
+// ignore_for_file:  sort_constructors_first
 // ignore_for_file: public_member_api_docs, avoid_dynamic_calls
+
+import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 
@@ -9,9 +12,9 @@ class Circuit extends Equatable {
     this.createdBy,
     required this.name,
     required this.location,
-    required this.address,
     required this.country,
     required this.countryCode,
+    required this.address,
     required this.lat,
     required this.lng,
     required this.length,
@@ -20,52 +23,6 @@ class Circuit extends Equatable {
     required this.telephone,
     required this.website,
   });
-
-  /// Creates a new [Circuit] from a JSON object.
-  factory Circuit.fromJson(dynamic data) {
-    return Circuit(
-      id: data['id'] as int,
-      name: data['name'] as String,
-      location: data['location'] as String,
-      address: data['address'] as String,
-      country: data['country'] as String,
-      countryCode: data['country_code'] as String,
-      lat: data['lat'] as double,
-      lng: data['lng'] as double,
-      length: data['length'] as int,
-      corners: data['corners'] as int,
-      email: data['email'] as String,
-      telephone: data['telephone'] as String,
-      website: data['website'] as String,
-      createdAt: data['created_at'] as String,
-      createdBy: data['created_by'] as String,
-    );
-  }
-
-  /// Creates a list of [Circuit]s from a decoded JSON object list.
-  static List<Circuit> fromJsonList(List<dynamic> jsonList) {
-    return jsonList.map(Circuit.fromJson).toList();
-  }
-
-  /// Converts a [Circuit] instance to the JSON representation.
-  Map<String, dynamic> toJson() {
-    return {
-      'name': name,
-      'location': location,
-      'country': country,
-      'country_code': countryCode,
-      'address': address,
-      'lat': lat,
-      'lng': lng,
-      'length': length,
-      'corners': corners,
-      'email': email,
-      'telephone': telephone,
-      'website': website,
-      'created_at': createdAt,
-      'created_by': createdBy,
-    };
-  }
 
   final int? id;
   final String? createdAt;
@@ -120,18 +77,73 @@ class Circuit extends Equatable {
   }
 
   @override
-  List<Object> get props => [
-        name,
-        location,
-        address,
-        country,
-        countryCode,
-        lat,
-        lng,
-        length,
-        corners,
-        email,
-        telephone,
-        website,
-      ];
+  List<Object> get props {
+    return [
+      name,
+      location,
+      country,
+      countryCode,
+      address,
+      lat,
+      lng,
+      length,
+      corners,
+      email,
+      telephone,
+      website,
+    ];
+  }
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'id': id,
+      'createdAt': createdAt,
+      'createdBy': createdBy,
+      'name': name,
+      'location': location,
+      'country': country,
+      'countryCode': countryCode,
+      'address': address,
+      'lat': lat,
+      'lng': lng,
+      'length': length,
+      'corners': corners,
+      'email': email,
+      'telephone': telephone,
+      'website': website,
+    };
+  }
+
+  factory Circuit.fromMap(Map<String, dynamic> map) {
+    return Circuit(
+      id: map['id'] != null ? map['id'] as int : null,
+      createdAt: map['createdAt'] != null ? map['createdAt'] as String : null,
+      createdBy: map['createdBy'] != null ? map['createdBy'] as String : null,
+      name: map['name'] as String,
+      location: map['location'] as String,
+      country: map['country'] as String,
+      countryCode: map['country_code'] as String,
+      address: map['address'] as String,
+      lat: map['lat'] as double,
+      lng: map['lng'] as double,
+      length: map['length'] as int,
+      corners: map['corners'] as int,
+      email: map['email'] as String,
+      telephone: map['telephone'] as String,
+      website: map['website'] as String,
+    );
+  }
+
+  factory Circuit.fromJson(dynamic data) =>
+      Circuit.fromMap(data as Map<String, dynamic>);
+
+  String toJson() => json.encode(toMap());
+
+  static List<Circuit> fromJsonList(List<dynamic> list) {
+    if (list.isEmpty) return [];
+    return list.map(Circuit.fromJson).toList();
+  }
+
+  @override
+  bool get stringify => true;
 }

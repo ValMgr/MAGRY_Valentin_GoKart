@@ -6,6 +6,8 @@ environment:
   sdk: '>=2.18.0 <3.0.0'
 
 dependencies:
+  circuit_repository:
+    path: ../circuit_repository
   equatable: ^2.0.3
   supabase_flutter: ^1.2.2
 

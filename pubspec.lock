@@ -140,7 +140,7 @@ packages:
       name: convert
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.2"
+    version: "3.1.1"
   country_flags:
     dependency: "direct main"
     description:

@@ -12,14 +12,15 @@ class CircuitRepository {
   final SupabaseClient _supabaseClient;
 
   /// Returns a list of [Circuit]s.
-  Future<List<Circuit>?> getAllCircuits() async {
+  Future<List<Circuit>> getAllCircuits() async {
     try {
-      final jsonList = await _supabaseClient
+      // get all circuits as json list
+      final circuits = await _supabaseClient
           .from('circuit')
           .select()
           .order('name', ascending: true);
 
-      return Circuit.fromJsonList(jsonList as List<dynamic>);
+      return Circuit.fromJsonList(circuits as List);
     } catch (e) {
       rethrow;
     }
@@ -35,7 +36,7 @@ class CircuitRepository {
           .eq(property, value)
           .order('name', ascending: true);
 
-      return Circuit.fromJsonList(circuits as List<dynamic>);
+      return Circuit.fromJsonList(circuits as List);
     } catch (e) {
       rethrow;
     }
@@ -47,7 +48,7 @@ class CircuitRepository {
       final circuit =
           await _supabaseClient.from('circuit').select().eq('id', id).single();
 
-      return Circuit.fromJson(circuit as Map<String, dynamic>);
+      return Circuit.fromJson(circuit as String);
     } catch (e) {
       rethrow;
     }
@@ -60,9 +61,8 @@ class CircuitRepository {
         createdAt: DateTime.now().toString(),
         createdBy: _supabaseClient.auth.currentUser!.id,
       );
-      print(data.toJson());
 
-      await _supabaseClient.from('circuit').insert(data.toJson()).single();
+      await _supabaseClient.from('circuit').insert(data.toMap());
     } catch (e) {
       rethrow;
     }
@@ -73,7 +73,7 @@ class CircuitRepository {
     try {
       await _supabaseClient
           .from('circuit')
-          .update(circuit.toJson())
+          .update(circuit.toMap())
           .eq('id', circuit.id)
           .single();
     } catch (e) {
@@ -82,9 +82,9 @@ class CircuitRepository {
   }
 
   /// Delete an existing [Circuit].
-  Future<Circuit?> deleteCircuit(Circuit circuit) async {
+  Future<void> deleteCircuit(Circuit circuit) async {
     try {
-      final deletedCircuit = await _supabaseClient
+      await _supabaseClient
           .from('circuit')
           .delete()
           .eq('id', circuit.id)

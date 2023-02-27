@@ -43,9 +43,13 @@ class CircuitContent extends StatelessWidget {
           return const Center(child: CircularProgressIndicator());
         }
 
+        if (state.status == CircuitsListStatus.failure) {
+          return const Center(child: Text('Une erreur est survenue !'));
+        }
+
         if (state.circuits.isEmpty &&
-            state.status == CircuitsListStatus.failure) {
-          return const Center(child: Text('Something went wrong'));
+            state.status == CircuitsListStatus.success) {
+          return const Center(child: Text('Aucun circuit trouvé !'));
         }
 
         return Scaffold(

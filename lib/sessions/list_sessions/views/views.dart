@@ -1,1 +1,1 @@
-export 'list_sessions_page.dart';
+export 'sessions_page.dart';

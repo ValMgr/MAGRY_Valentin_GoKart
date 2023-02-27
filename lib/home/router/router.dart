@@ -13,7 +13,7 @@ class HomeRouter extends StatelessWidget {
       builder: (context, state) {
         switch (state.currentPage) {
           case 0:
-            return const ListSessionPage();
+            return const SessionPage();
           case 1:
             return const HomeContent();
           case 2:
