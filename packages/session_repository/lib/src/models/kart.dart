@@ -43,8 +43,23 @@ class Kart extends Equatable {
 
   String toJson() => json.encode(toMap());
 
-  factory Kart.fromJson(String source) =>
-      Kart.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory Kart.fromJson(dynamic data) {
+    return Kart.fromMap(data as Map<String, dynamic>);
+  }
+
+  static List<Kart> fromJsonList(List<dynamic> list) {
+    if (list.isEmpty) return <Kart>[];
+    return list.map(Kart.fromJson).toList();
+  }
+
+  static const empty = Kart(
+    name: '',
+    power: 0,
+  );
+
+  bool get isEmpty => this == empty;
+
+  bool get isNotEmpty => this != empty;
 
   @override
   bool get stringify => true;

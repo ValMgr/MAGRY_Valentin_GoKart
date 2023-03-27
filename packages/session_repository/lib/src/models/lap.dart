@@ -5,12 +5,12 @@ import 'package:equatable/equatable.dart';
 
 class Lap extends Equatable {
   final int? id;
-  final int session;
+  final int? session;
   final int duration;
 
   const Lap({
     this.id,
-    required this.session,
+    this.session,
     required this.duration,
   });
 
@@ -55,5 +55,5 @@ class Lap extends Equatable {
   bool get stringify => true;
 
   @override
-  List<Object> get props => [session, duration];
+  List<Object> get props => [duration];
 }

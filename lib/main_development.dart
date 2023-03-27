@@ -29,7 +29,6 @@ Future<void> main() async {
     throw Exception('Missing environment variables');
   }
 
-
   await Supabase.initialize(
     url: dotenv.get('SUPABASE_URL'),
     anonKey: dotenv.get('SUPABASE_ANON_KEY'),

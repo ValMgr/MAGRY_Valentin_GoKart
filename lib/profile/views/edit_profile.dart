@@ -75,10 +75,7 @@ Widget _avatarEditField(String avatar, Color defaultBackground) {
       radius: 30,
       backgroundColor: defaultBackground,
       child: Stack(
-        children: [
-          if (avatar != '') Image.network(avatar),
-          const Icon(Icons.add_a_photo, color: Colors.white)
-        ],
+        children: [if (avatar != '') Image.network(avatar), const Icon(Icons.add_a_photo, color: Colors.white)],
       ),
     ),
   );

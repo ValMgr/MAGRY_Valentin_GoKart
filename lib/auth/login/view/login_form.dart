@@ -110,9 +110,7 @@ class _LoginButton extends StatelessWidget {
             ? const CircularProgressIndicator()
             : ElevatedButton(
                 key: const Key('loginForm_continue_raisedButton'),
-                onPressed: state.status.isValidated
-                    ? () => context.read<LoginCubit>().logInWithCredentials()
-                    : null,
+                onPressed: state.status.isValidated ? () => context.read<LoginCubit>().logInWithCredentials() : null,
                 child: const Text('Login'),
               );
       },

@@ -6,8 +6,7 @@ import 'package:supabase_flutter/supabase_flutter.dart' hide Session;
 /// {@endtemplate}
 class SessionRepository {
   /// {@macro profile_repository}
-  SessionRepository({SupabaseClient? supabaseClient})
-      : _supabaseClient = supabaseClient ?? Supabase.instance.client;
+  SessionRepository({SupabaseClient? supabaseClient}) : _supabaseClient = supabaseClient ?? Supabase.instance.client;
 
   final SupabaseClient _supabaseClient;
 
@@ -18,8 +17,20 @@ class SessionRepository {
       final data = await _supabaseClient.from('session').select(
             '*, lap(*), kart(*), circuit(*)',
           );
-      print(data);
       return Session.fromJsonList(data as List);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  /// Returns a list of [Kart]s
+  /// Used to populate the dropdown menu
+  // TODO: move this to a kart repository
+  // https://github.com/ValMgr/Go_Kart/issues/1
+  Future<List<Kart>> getKarts() async {
+    try {
+      final data = await _supabaseClient.from('kart').select();
+      return Kart.fromJsonList(data as List);
     } catch (e) {
       rethrow;
     }

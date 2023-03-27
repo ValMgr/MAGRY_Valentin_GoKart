@@ -76,8 +76,7 @@ class _PasswordInput extends StatelessWidget {
       buildWhen: (previous, current) => previous.password != current.password,
       builder: (context, state) => TextField(
         key: const Key('signupForm_passwordInput_textField'),
-        onChanged: (password) =>
-            context.read<SignUpCubit>().passwordChanged(password),
+        onChanged: (password) => context.read<SignUpCubit>().passwordChanged(password),
         obscureText: true,
         decoration: InputDecoration(
           labelText: 'Password',
@@ -93,19 +92,15 @@ class _ConfirmedPasswordInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SignUpCubit, SignUpState>(
-      buildWhen: (previous, current) =>
-          previous.confirmedPassword != current.confirmedPassword,
+      buildWhen: (previous, current) => previous.confirmedPassword != current.confirmedPassword,
       builder: (context, state) => TextField(
         key: const Key('signupForm_confirmedPasswordInput_textField'),
-        onChanged: (confirmedPassword) => context
-            .read<SignUpCubit>()
-            .confirmedPasswordChanged(confirmedPassword),
+        onChanged: (confirmedPassword) => context.read<SignUpCubit>().confirmedPasswordChanged(confirmedPassword),
         obscureText: true,
         decoration: InputDecoration(
           labelText: 'Confirm Password',
           helperText: '',
-          errorText:
-              state.confirmedPassword.invalid ? 'Passwords do not match' : null,
+          errorText: state.confirmedPassword.invalid ? 'Passwords do not match' : null,
         ),
       ),
     );
@@ -122,9 +117,7 @@ class _SignUpButton extends StatelessWidget {
             ? const CircularProgressIndicator()
             : ElevatedButton(
                 key: const Key('signupForm_continue_raisedButton'),
-                onPressed: state.status.isValidated
-                    ? () => context.read<SignUpCubit>().signUpFormSubmitted()
-                    : null,
+                onPressed: state.status.isValidated ? () => context.read<SignUpCubit>().signUpFormSubmitted() : null,
                 child: const Text('Sign up !'),
               );
       },

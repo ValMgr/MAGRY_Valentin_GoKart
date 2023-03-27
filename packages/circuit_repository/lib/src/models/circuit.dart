@@ -134,8 +134,7 @@ class Circuit extends Equatable {
     );
   }
 
-  factory Circuit.fromJson(dynamic data) =>
-      Circuit.fromMap(data as Map<String, dynamic>);
+  factory Circuit.fromJson(dynamic data) => Circuit.fromMap(data as Map<String, dynamic>);
 
   String toJson() => json.encode(toMap());
 
@@ -143,6 +142,25 @@ class Circuit extends Equatable {
     if (list.isEmpty) return [];
     return list.map(Circuit.fromJson).toList();
   }
+
+  static const empty = Circuit(
+    name: '',
+    location: '',
+    country: '',
+    countryCode: '',
+    address: '',
+    lat: 0,
+    lng: 0,
+    length: 0,
+    corners: 0,
+    email: '',
+    telephone: '',
+    website: '',
+  );
+
+  bool get isEmpty => this == Circuit.empty;
+
+  bool get isNotEmpty => this != Circuit.empty;
 
   @override
   bool get stringify => true;

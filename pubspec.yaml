@@ -22,6 +22,7 @@ dependencies:
   flutter_dotenv: ^5.0.2
   flutter_localizations:
     sdk: flutter
+  flutter_picker: ^2.1.0
   form_inputs:
     path: packages/form_inputs
   formz: ^0.4.0

@@ -30,8 +30,7 @@ class HomeView extends StatelessWidget {
             SettingsButton(),
           ],
         ),
-        bottomNavigationBar:
-            AppBottomNavigationBar(currentIndex: state.currentPage),
+        bottomNavigationBar: AppBottomNavigationBar(currentIndex: state.currentPage),
         body: const HomeRouter(),
       ),
     );

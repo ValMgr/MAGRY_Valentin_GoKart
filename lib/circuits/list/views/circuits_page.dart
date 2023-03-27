@@ -38,8 +38,7 @@ class CircuitContent extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        if (state.circuits.isEmpty &&
-            state.status == CircuitsListStatus.loading) {
+        if (state.circuits.isEmpty && state.status == CircuitsListStatus.loading) {
           return const Center(child: CircularProgressIndicator());
         }
 
@@ -47,8 +46,7 @@ class CircuitContent extends StatelessWidget {
           return const Center(child: Text('Une erreur est survenue !'));
         }
 
-        if (state.circuits.isEmpty &&
-            state.status == CircuitsListStatus.success) {
+        if (state.circuits.isEmpty && state.status == CircuitsListStatus.success) {
           return const Center(child: Text('Aucun circuit trouvé !'));
         }
 

@@ -64,8 +64,7 @@ class CreateCircuitForm extends StatelessWidget {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {
-                final created =
-                    await context.read<CreateCircuitCubit>().createCircuit();
+                final created = await context.read<CreateCircuitCubit>().createCircuit();
                 if (created) {
                   // ignore: use_build_context_synchronously
                   Navigator.of(context).pop();
@@ -95,8 +94,7 @@ class _NameInput extends StatelessWidget {
         }
         return null;
       },
-      onChanged: (value) =>
-          context.read<CreateCircuitCubit>().nameChanged(value),
+      onChanged: (value) => context.read<CreateCircuitCubit>().nameChanged(value),
     );
   }
 }
@@ -117,9 +115,7 @@ class _CornersInput extends StatelessWidget {
         }
         return null;
       },
-      onChanged: (value) => context
-          .read<CreateCircuitCubit>()
-          .cornersChanged(int.tryParse(value) ?? 0),
+      onChanged: (value) => context.read<CreateCircuitCubit>().cornersChanged(int.tryParse(value) ?? 0),
     );
   }
 }
@@ -141,9 +137,7 @@ class _LengthInput extends StatelessWidget {
         }
         return null;
       },
-      onChanged: (value) => context
-          .read<CreateCircuitCubit>()
-          .lengthChanged(int.tryParse(value) ?? 0),
+      onChanged: (value) => context.read<CreateCircuitCubit>().lengthChanged(int.tryParse(value) ?? 0),
     );
   }
 }
@@ -163,8 +157,7 @@ class _EmailInput extends StatelessWidget {
         }
         return null;
       },
-      onChanged: (value) =>
-          context.read<CreateCircuitCubit>().emailChanged(value),
+      onChanged: (value) => context.read<CreateCircuitCubit>().emailChanged(value),
     );
   }
 }
@@ -184,8 +177,7 @@ class _TelephoneInput extends StatelessWidget {
         }
         return null;
       },
-      onChanged: (value) =>
-          context.read<CreateCircuitCubit>().telephoneChanged(value),
+      onChanged: (value) => context.read<CreateCircuitCubit>().telephoneChanged(value),
     );
   }
 }
@@ -205,8 +197,7 @@ class _WebsiteInput extends StatelessWidget {
         }
         return null;
       },
-      onChanged: (value) =>
-          context.read<CreateCircuitCubit>().websiteChanged(value),
+      onChanged: (value) => context.read<CreateCircuitCubit>().websiteChanged(value),
     );
   }
 }
@@ -226,8 +217,7 @@ class _LocationInput extends StatelessWidget {
         }
         return null;
       },
-      onChanged: (value) =>
-          context.read<CreateCircuitCubit>().locationChanged(value),
+      onChanged: (value) => context.read<CreateCircuitCubit>().locationChanged(value),
     );
   }
 }
@@ -247,8 +237,7 @@ class _AddressInput extends StatelessWidget {
         }
         return null;
       },
-      onChanged: (value) =>
-          context.read<CreateCircuitCubit>().addressChanged(value),
+      onChanged: (value) => context.read<CreateCircuitCubit>().addressChanged(value),
     );
   }
 }
@@ -268,9 +257,7 @@ class _LatInput extends StatelessWidget {
         }
         return null;
       },
-      onChanged: (value) => context
-          .read<CreateCircuitCubit>()
-          .latChanged(double.tryParse(value) ?? 0.0),
+      onChanged: (value) => context.read<CreateCircuitCubit>().latChanged(double.tryParse(value) ?? 0.0),
     );
   }
 }
@@ -290,9 +277,7 @@ class _LngInput extends StatelessWidget {
         }
         return null;
       },
-      onChanged: (value) => context
-          .read<CreateCircuitCubit>()
-          .lngChanged(double.tryParse(value) ?? 0.0),
+      onChanged: (value) => context.read<CreateCircuitCubit>().lngChanged(double.tryParse(value) ?? 0.0),
     );
   }
 }
@@ -312,8 +297,7 @@ class _CountryCodeInput extends StatelessWidget {
         }
         return null;
       },
-      onChanged: (value) =>
-          context.read<CreateCircuitCubit>().countryCodeChanged(value),
+      onChanged: (value) => context.read<CreateCircuitCubit>().countryCodeChanged(value),
     );
   }
 }
@@ -333,8 +317,7 @@ class _CountryInput extends StatelessWidget {
         }
         return null;
       },
-      onChanged: (value) =>
-          context.read<CreateCircuitCubit>().countryChanged(value),
+      onChanged: (value) => context.read<CreateCircuitCubit>().countryChanged(value),
     );
   }
 }

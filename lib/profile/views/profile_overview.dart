@@ -28,9 +28,7 @@ class ProfileOverviewContent extends StatelessWidget {
     final cubit = context.read<ProfileCubit>();
     return BlocConsumer<ProfileCubit, ProfileState>(
       listener: (context, state) {
-        if (state.status == ProfileStatus.success &&
-            !state.isSetup &&
-            !EditProfile.isEditModalOpened) {
+        if (state.status == ProfileStatus.success && !state.isSetup && !EditProfile.isEditModalOpened) {
           QuickAlert.show(
             context: context,
             title: 'Welcome !',
