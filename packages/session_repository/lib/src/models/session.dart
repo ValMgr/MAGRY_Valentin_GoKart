@@ -10,10 +10,10 @@ import 'package:session_repository/session_repository.dart';
 class Session extends Equatable {
   const Session({
     this.id,
-    required this.date,
+    this.date,
     required this.circuit,
     required this.feeling,
-    required this.notes,
+    required this.note,
     required this.trackState,
     required this.weather,
     required this.kart,
@@ -22,10 +22,10 @@ class Session extends Equatable {
   });
 
   final int? id;
-  final DateTime date;
+  final DateTime? date;
   final Circuit circuit;
   final String feeling;
-  final int notes;
+  final int note;
   final String trackState;
   final Map<String, dynamic> weather;
   final Kart kart;
@@ -37,7 +37,7 @@ class Session extends Equatable {
     DateTime? date,
     Circuit? circuit,
     String? feeling,
-    int? notes,
+    int? note,
     String? trackState,
     Map<String, dynamic>? weather,
     Kart? kart,
@@ -49,7 +49,7 @@ class Session extends Equatable {
       date: date ?? this.date,
       circuit: circuit ?? this.circuit,
       feeling: feeling ?? this.feeling,
-      notes: notes ?? this.notes,
+      note: note ?? this.note,
       trackState: trackState ?? this.trackState,
       weather: weather ?? this.weather,
       kart: kart ?? this.kart,
@@ -60,16 +60,14 @@ class Session extends Equatable {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'id': id,
-      'date': date.toIso8601String(),
-      'circuit': circuit,
+      'date': date?.toString(),
+      'circuit': circuit.id,
       'feeling': feeling,
-      'notes': notes,
-      'trackState': trackState,
+      'note': note,
+      'trackstate': trackState,
       'weather': weather,
-      'kart': kart.toMap(),
-      'lap': laps.map((x) => x.toMap()).toList(),
-      'userId': userId,
+      'kart': kart.id,
+      'user_id': userId,
     };
   }
 
@@ -79,7 +77,7 @@ class Session extends Equatable {
       date: DateTime.parse(map['date'] as String),
       circuit: Circuit.fromMap(map['circuit'] as Map<String, dynamic>),
       feeling: map['feeling'] as String,
-      notes: map['notes'] as int,
+      note: map['note'] as int,
       trackState: map['trackstate'] as String,
       weather: map['weather'] as Map<String, dynamic>,
       kart: Kart.fromMap(map['kart'] as Map<String, dynamic>),
@@ -88,7 +86,7 @@ class Session extends Equatable {
     );
   }
 
-  String toJson() => json.encode(toMap());
+  dynamic toJson() => json.encode(toMap());
 
   factory Session.fromJson(dynamic data) {
     return Session.fromMap(data as Map<String, dynamic>);
@@ -99,16 +97,26 @@ class Session extends Equatable {
     return list.map(Session.fromJson).toList();
   }
 
+  static const empty = Session(
+    circuit: Circuit.empty,
+    feeling: '',
+    note: 0,
+    trackState: '',
+    weather: {},
+    kart: Kart.empty,
+    laps: [],
+    userId: '',
+  );
+
   @override
   bool get stringify => true;
 
   @override
   List<Object> get props {
     return [
-      date,
       circuit,
       feeling,
-      notes,
+      note,
       trackState,
       weather,
       kart,

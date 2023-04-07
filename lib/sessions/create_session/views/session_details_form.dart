@@ -10,6 +10,7 @@ class SessionDetailsForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<CreateSessionCubit>();
+    const weather = ['Sunny', 'Cloudy', 'Rainy', 'Snowy', 'Windy'];
 
     return FutureBuilder(
       future: Future.wait([cubit.getCircuits(), cubit.getKarts()]),
@@ -23,8 +24,10 @@ class SessionDetailsForm extends StatelessWidget {
 
         return Column(
           children: [
-            DropdownButton(
-              value: cubit.state.circuit.isNotEmpty ? cubit.state.circuit.name : circuitsList.first.name,
+            DropdownButtonFormField(
+              decoration: const InputDecoration(
+                labelText: 'Circuit',
+              ),
               icon: const Icon(Icons.arrow_downward),
               isExpanded: true,
               items: circuitsList.map((circuit) {
@@ -37,8 +40,10 @@ class SessionDetailsForm extends StatelessWidget {
                 cubit.onCircuitChanged(circuitsList.firstWhere((circuit) => circuit.name == value));
               },
             ),
-            DropdownButton(
-              value: cubit.state.kart.isNotEmpty ? cubit.state.kart.name : kartsList.first.name,
+            DropdownButtonFormField(
+              decoration: const InputDecoration(
+                labelText: 'Kart',
+              ),
               icon: const Icon(Icons.arrow_downward),
               isExpanded: true,
               items: kartsList.map((kart) {
@@ -51,19 +56,64 @@ class SessionDetailsForm extends StatelessWidget {
                 cubit.onKartChanged(kartsList.firstWhere((kart) => kart.name == value));
               },
             ),
-            TextField(
+            TextFormField(
               decoration: const InputDecoration(
                 labelText: 'Feeling',
               ),
               onChanged: cubit.onFeelingChanged,
             ),
-            TextField(
+            TextFormField(
               decoration: const InputDecoration(
-                labelText: 'Notes',
+                labelText: 'Trackstate',
+              ),
+              onChanged: cubit.onTrackStateChanged,
+            ),
+            TextFormField(
+              decoration: const InputDecoration(
+                labelText: 'Note',
               ),
               keyboardType: TextInputType.number,
               onChanged: (value) => cubit.onNoteChanged(int.tryParse(value) ?? 0),
             ),
+            IntrinsicHeight(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: DropdownButtonFormField(
+                      isExpanded: true,
+                      decoration: const InputDecoration(
+                        labelText: 'Weather',
+                      ),
+                      icon: const Icon(Icons.arrow_downward),
+                      items: weather.map((weather) {
+                        return DropdownMenuItem(
+                          value: weather,
+                          child: SizedBox(
+                            child: Text(
+                              weather,
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (value) => cubit.onWeatherChanged({...cubit.state.weather, 'weather': value}),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: TextFormField(
+                      decoration: const InputDecoration(
+                        labelText: 'Temperature',
+                      ),
+                      keyboardType: TextInputType.number,
+                      onChanged: (value) =>
+                          cubit.onWeatherChanged({...cubit.state.weather, 'temperature': int.tryParse(value) ?? 0}),
+                    ),
+                  ),
+                ],
+              ),
+            )
           ],
         );
       },

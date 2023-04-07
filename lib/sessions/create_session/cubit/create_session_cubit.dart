@@ -1,3 +1,4 @@
+import 'package:authentication_repository/authentication_repository.dart';
 import 'package:circuit_repository/circuit_repository.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,6 +11,7 @@ class CreateSessionCubit extends Cubit<CreateSessionState> {
 
   final CircuitRepository _circuitRepository = CircuitRepository();
   final SessionRepository _sessionRepository = SessionRepository();
+  final AuthenticationRepository _authenticationRepository = AuthenticationRepository();
 
   void addLap(Lap lap) {
     emit(state.copyWith(laps: [...state.laps, lap]));
@@ -49,5 +51,23 @@ class CreateSessionCubit extends Cubit<CreateSessionState> {
 
   Future<List<Kart>> getKarts() async {
     return _sessionRepository.getKarts();
+  }
+
+  Future<void> createSession() async {
+    final userId = _authenticationRepository.currentUser.id;
+
+    final session = Session(
+      date: DateTime.now().toUtc(),
+      laps: state.laps,
+      circuit: state.circuit,
+      kart: state.kart,
+      note: state.note,
+      weather: state.weather,
+      feeling: state.feeling,
+      trackState: state.trackState,
+      userId: userId,
+    );
+
+    await _sessionRepository.createSession(session);
   }
 }

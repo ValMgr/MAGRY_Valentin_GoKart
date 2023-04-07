@@ -6,7 +6,7 @@ class CreateSessionState extends Equatable {
     this.laps = const [],
     this.circuit = Circuit.empty,
     this.kart = Kart.empty,
-    this.note = 0,
+    this.note = -1,
     this.weather = const {},
     this.feeling = '',
     this.trackState = '',

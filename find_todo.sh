@@ -1,14 +1,13 @@
 #!/bin/bash
 
-path=lib
 todorgxp="@todo|@TODO"
-result=$(find $path -type f -print | xargs grep -HiRE $todorgxp)
 
 if [ $? -eq 1 ]; then
   echo "✅"
   exit 0
 else
-  find $path -type f -print | xargs grep -HiRE $todorgxp
+  find lib -type f -print | xargs grep -HiRE $todorgxp
+  find packages -type f -print | xargs grep -HiRE $todorgxp
   echo
   echo "❌"
   exit 1

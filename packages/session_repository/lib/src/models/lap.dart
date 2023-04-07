@@ -28,8 +28,7 @@ class Lap extends Equatable {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'id': id,
-      'session': session,
+      'session_id': session,
       'duration': duration,
     };
   }
@@ -44,8 +43,7 @@ class Lap extends Equatable {
 
   String toJson() => json.encode(toMap());
 
-  factory Lap.fromJson(dynamic data) =>
-      Lap.fromMap(data as Map<String, dynamic>);
+  factory Lap.fromJson(dynamic data) => Lap.fromMap(data as Map<String, dynamic>);
 
   static List<Lap> fromJsonList(List<dynamic> jsonList) {
     return jsonList.map(Lap.fromJson).toList();

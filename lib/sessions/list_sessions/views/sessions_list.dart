@@ -13,7 +13,7 @@ class SessionsList extends StatelessWidget {
       itemCount: sessions.length,
       itemBuilder: (context, index) {
         final session = sessions[index];
-        final timeSinceSession = getTimeSinceSession(session.date);
+        final timeSinceSession = getTimeSinceSession(session.date ?? DateTime.now());
 
         return ListTile(
           title: Text(session.circuit.name),
@@ -28,7 +28,7 @@ class SessionsList extends StatelessWidget {
 
 String getTimeSinceSession(DateTime date) {
   final now = DateTime.now();
-  final difference = now.difference(date);
+  final difference = Duration(milliseconds: now.toUtc().millisecondsSinceEpoch - date.toUtc().millisecondsSinceEpoch);
 
   if (difference.inDays > 0) {
     return '${difference.inDays} jours';

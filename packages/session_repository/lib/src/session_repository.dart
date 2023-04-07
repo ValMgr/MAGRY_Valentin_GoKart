@@ -23,6 +23,22 @@ class SessionRepository {
     }
   }
 
+  /// Create a new [Session].
+  Future<void> createSession(Session session) async {
+    try {
+      final body = session.toMap();
+      final data = await _supabaseClient.from('session').insert(body).select('id');
+
+      await _supabaseClient.from('lap').insert(
+            session.laps.map((lap) => lap.copyWith(session: data[0]['id'] as int).toMap()).toList(),
+          );
+    } catch (e, stacktrace) {
+      print(e);
+      print(stacktrace);
+      rethrow;
+    }
+  }
+
   /// Returns a list of [Kart]s
   /// Used to populate the dropdown menu
   // TODO: move this to a kart repository

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_kart/sessions/sessions.dart';
+import 'package:quickalert/quickalert.dart';
 
 class CreateSessionPage extends StatelessWidget {
   const CreateSessionPage({super.key});
@@ -30,6 +31,7 @@ class CreateSessionView extends StatelessWidget {
           ),
           floatingActionButton: FloatingActionButton(
             onPressed: () {
+              if (state.step == 2) changeStep(1);
               showModalBottomSheet<void>(
                 context: context,
                 builder: (context) => AddLap(
@@ -59,7 +61,7 @@ class CreateSessionView extends StatelessWidget {
                   ),
                 ),
                 ElevatedButton(
-                  onPressed: () => print('create session'),
+                  onPressed: () => _createSession(context, state),
                   child: const Text('Create session'),
                 )
               ],
@@ -68,6 +70,32 @@ class CreateSessionView extends StatelessWidget {
         );
       },
     );
+  }
+
+  void _createSession(BuildContext context, CreateSessionState state) {
+    if (state.weather.isEmpty ||
+        state.feeling.isEmpty ||
+        state.laps.isEmpty ||
+        state.note == -1 ||
+        state.circuit.isEmpty ||
+        state.kart.isEmpty) {
+      QuickAlert.show(
+        context: context,
+        type: QuickAlertType.info,
+        title: 'Create session',
+        text: "You haven't filled all the fields yet, are you sure you want to create the session ?",
+        confirmBtnText: 'Yes',
+        cancelBtnText: 'No',
+        showCancelBtn: true,
+        onConfirmBtnTap: () {
+          context.read<CreateSessionCubit>().createSession();
+          Navigator.of(context, rootNavigator: true).pop();
+        },
+      );
+    } else {
+      context.read<CreateSessionCubit>().createSession();
+      Navigator.of(context).pop();
+    }
   }
 }
 
