@@ -41,7 +41,7 @@ class SessionRepository {
 
   /// Returns a list of [Kart]s
   /// Used to populate the dropdown menu
-  // TODO: move this to a kart repository
+  // @TODO: move this to a kart repository
   // https://github.com/ValMgr/Go_Kart/issues/1
   Future<List<Kart>> getKarts() async {
     try {

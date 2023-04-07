@@ -5,8 +5,7 @@ import 'package:profile_repository/profile_repository.dart';
 part 'profile_state.dart';
 
 class ProfileCubit extends Cubit<ProfileState> {
-  ProfileCubit(this._profileRepository, this._userId)
-      : super(const ProfileState());
+  ProfileCubit(this._profileRepository, this._userId) : super(const ProfileState());
 
   final ProfileRepository _profileRepository;
   final String _userId;
@@ -14,7 +13,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   Future<void> getProfile() async {
     emit(state.copyWith(status: ProfileStatus.loading));
     try {
-      final profile = await _profileRepository.getOneProfile(_userId);
+      final profile = await _profileRepository.findOne(_userId);
       emit(
         state.copyWith(
           email: profile.email,
@@ -71,5 +70,4 @@ class ProfileCubit extends Cubit<ProfileState> {
   void usernameChanged(String username) {
     emit(state.copyWith(username: username));
   }
-  
 }

@@ -9,6 +9,8 @@ List<Page<dynamic>> onGenerateAppViewPages(
 ) {
   switch (state) {
     case AppStatus.authenticated:
+    // @TODO: Hoisted le bloc provider + ajouter le findOneProfile
+    // BLocBuuilder qui listen les différents states
       return [HomePage.page()];
     case AppStatus.unauthenticated:
       return [LoginPage.page()];

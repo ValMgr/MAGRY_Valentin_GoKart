@@ -10,6 +10,7 @@ class ProfileOveriew extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // @TODO :
     return BlocProvider(
       create: (_) => ProfileCubit(
         ProfileRepository(),
@@ -50,6 +51,10 @@ class ProfileOverviewContent extends StatelessWidget {
         }
       },
       builder: (context, state) {
+        if (state.status == ProfileStatus.loading) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
         return SizedBox(
           width: double.infinity,
           child: DecoratedBox(

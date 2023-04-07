@@ -17,7 +17,7 @@ class CircuitRepository {
       // get all circuits as json list
       final circuits = await _supabaseClient
           .from('circuit')
-          .select()
+          .select<String>()
           .order('name', ascending: true);
 
       return Circuit.fromJsonList(circuits as List);
