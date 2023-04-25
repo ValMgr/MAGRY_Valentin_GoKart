@@ -6,8 +6,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 /// {@endtemplate}
 class CircuitRepository {
   /// {@macro profile_repository}
-  CircuitRepository({SupabaseClient? supabaseClient})
-      : _supabaseClient = supabaseClient ?? Supabase.instance.client;
+  CircuitRepository({SupabaseClient? supabaseClient}) : _supabaseClient = supabaseClient ?? Supabase.instance.client;
 
   final SupabaseClient _supabaseClient;
 
@@ -15,10 +14,7 @@ class CircuitRepository {
   Future<List<Circuit>> getAllCircuits() async {
     try {
       // get all circuits as json list
-      final circuits = await _supabaseClient
-          .from('circuit')
-          .select<String>()
-          .order('name', ascending: true);
+      final circuits = await _supabaseClient.from('circuit').select().order('name', ascending: true);
 
       return Circuit.fromJsonList(circuits as List);
     } catch (e) {
@@ -27,14 +23,10 @@ class CircuitRepository {
   }
 
   /// Returns a list of [Circuit]s filtered by any [Circuit] property.
-  Future<List<Circuit>?> getCircuitsByProperty(
-      String property, String value) async {
+  Future<List<Circuit>?> getCircuitsByProperty(String property, String value) async {
     try {
-      final circuits = await _supabaseClient
-          .from('circuit')
-          .select()
-          .eq(property, value)
-          .order('name', ascending: true);
+      final circuits =
+          await _supabaseClient.from('circuit').select().eq(property, value).order('name', ascending: true);
 
       return Circuit.fromJsonList(circuits as List);
     } catch (e) {
@@ -45,8 +37,7 @@ class CircuitRepository {
   /// Return a single [Circuit] by id.
   Future<Circuit?> getCircuitById(String id) async {
     try {
-      final circuit =
-          await _supabaseClient.from('circuit').select().eq('id', id).single();
+      final circuit = await _supabaseClient.from('circuit').select().eq('id', id).single();
 
       return Circuit.fromJson(circuit as String);
     } catch (e) {
@@ -71,11 +62,7 @@ class CircuitRepository {
   /// Update an existing [Circuit].
   Future<void> updateCircuit(Circuit circuit) async {
     try {
-      await _supabaseClient
-          .from('circuit')
-          .update(circuit.toMap())
-          .eq('id', circuit.id)
-          .single();
+      await _supabaseClient.from('circuit').update(circuit.toMap()).eq('id', circuit.id).single();
     } catch (e) {
       rethrow;
     }
@@ -84,11 +71,7 @@ class CircuitRepository {
   /// Delete an existing [Circuit].
   Future<void> deleteCircuit(Circuit circuit) async {
     try {
-      await _supabaseClient
-          .from('circuit')
-          .delete()
-          .eq('id', circuit.id)
-          .single();
+      await _supabaseClient.from('circuit').delete().eq('id', circuit.id).single();
     } catch (e) {
       rethrow;
     }

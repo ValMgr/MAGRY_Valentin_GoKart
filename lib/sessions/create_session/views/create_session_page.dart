@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_kart/app/app.dart';
 import 'package:go_kart/sessions/sessions.dart';
 import 'package:quickalert/quickalert.dart';
 
@@ -24,14 +25,11 @@ class CreateSessionView extends StatelessWidget {
     return BlocBuilder<CreateSessionCubit, CreateSessionState>(
       bloc: cubit,
       builder: (context, state) {
-        void changeStep(int step) => cubit.changeStep(step);
         return Scaffold(
-          appBar: AppBar(
-            title: const Text("Light's out and away we go !"),
-          ),
+          appBar: GoKartAppBar.appBar("It's light out and away we go!"),
           floatingActionButton: FloatingActionButton(
             onPressed: () {
-              if (state.step == 2) changeStep(1);
+
               showModalBottomSheet<void>(
                 context: context,
                 builder: (context) => AddLap(
@@ -46,22 +44,36 @@ class CreateSessionView extends StatelessWidget {
             child: Column(
               children: [
                 Expanded(
-                  child: IndexedStack(
-                    index: state.step - 1,
-                    children: [
-                      FirstStepView(
-                        state: state,
-                        changeStep: changeStep,
-                      ),
-                      SecondStepView(
-                        state: state,
-                        changeStep: changeStep,
-                      ),
-                    ],
+                  child: DefaultTabController(
+                    length: 2,
+                    child: Column(
+                      children: [
+                        const TabBar(
+                          labelColor: Colors.black,
+                          unselectedLabelColor: Colors.grey,
+                          indicatorColor: Colors.black,
+                          tabs: [Tab(text: 'Laps'), Tab(text: 'Details')],
+                        ),
+                        Expanded(
+                          child: TabBarView(children: [
+                            FirstStepView(
+                              state: state,
+                            ),
+                            // @TODO Load necessary data before displaying the second step
+                            // to avoid the state to reset when changing tabs
+                            SecondStepView(
+                              state: state,
+                            ),
+                          ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 ElevatedButton(
                   onPressed: () => _createSession(context, state),
+                  style: GoKartButtons.elevatedButton,
                   child: const Text('Create session'),
                 )
               ],
@@ -100,25 +112,29 @@ class CreateSessionView extends StatelessWidget {
 }
 
 class FirstStepView extends StatelessWidget {
-  const FirstStepView({super.key, required this.state, required this.changeStep});
+  const FirstStepView({
+    super.key,
+    required this.state,
+    //required this.changeStep,
+  });
 
   final CreateSessionState state;
-  final void Function(int) changeStep;
+  // final void Function(int) changeStep;
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Column(
         children: [
-          ElevatedButton(
-            onPressed: () => changeStep(2),
-            child: Row(
-              children: const [
-                Text('Session details'),
-                Icon(Icons.arrow_forward),
-              ],
-            ),
-          ),
+          // ElevatedButton(
+          //   onPressed: () => changeStep(2),
+          //   child: Row(
+          //     children: const [
+          //       Text('Session details'),
+          //       Icon(Icons.arrow_forward),
+          //     ],
+          //   ),
+          // ),
           const SizedBox(height: 16),
           Expanded(
             child: LapsList(
@@ -132,27 +148,20 @@ class FirstStepView extends StatelessWidget {
 }
 
 class SecondStepView extends StatelessWidget {
-  const SecondStepView({super.key, required this.state, required this.changeStep});
+  const SecondStepView({
+    super.key,
+    required this.state,
+    // required this.changeStep,
+  });
 
   final CreateSessionState state;
-  final void Function(int) changeStep;
+  // final void Function(int) changeStep;
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Column(
-        children: [
-          ElevatedButton(
-            onPressed: () => changeStep(1),
-            child: Row(
-              children: const [
-                Icon(Icons.arrow_back),
-                Text('Laps'),
-              ],
-            ),
-          ),
-          const SizedBox(height: 16),
-          // ignore: prefer_const_constructors
+        children: const [
           SessionDetailsForm(),
         ],
       ),

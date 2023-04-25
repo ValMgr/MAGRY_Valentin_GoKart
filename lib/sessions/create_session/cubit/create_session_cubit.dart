@@ -17,10 +17,6 @@ class CreateSessionCubit extends Cubit<CreateSessionState> {
     emit(state.copyWith(laps: [...state.laps, lap]));
   }
 
-  void changeStep(int step) {
-    emit(state.copyWith(step: step));
-  }
-
   void onFeelingChanged(String feeling) {
     emit(state.copyWith(feeling: feeling));
   }
@@ -46,7 +42,12 @@ class CreateSessionCubit extends Cubit<CreateSessionState> {
   }
 
   Future<List<Circuit>> getCircuits() async {
-    return _circuitRepository.getAllCircuits();
+    try {
+      return _circuitRepository.getAllCircuits();
+    } catch (e) {
+      emit(state.copyWith(status: CreateSessionStatus.failure));
+      return [];
+    }
   }
 
   Future<List<Kart>> getKarts() async {

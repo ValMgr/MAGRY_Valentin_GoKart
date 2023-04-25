@@ -6,6 +6,7 @@
 // https://opensource.org/licenses/MIT.
 
 export 'bloc/app_bloc.dart';
-export 'color_schemes.g.dart';
 export 'routes/routes.dart';
+export 'theme/color_schemes.g.dart';
+export 'theme/theme.dart';
 export 'view/app.dart';

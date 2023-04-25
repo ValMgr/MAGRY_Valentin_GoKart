@@ -1,8 +1,8 @@
 part of 'create_session_cubit.dart';
 
+enum CreateSessionStatus { initial, loading, created, failure }
 class CreateSessionState extends Equatable {
   const CreateSessionState({
-    this.step = 1,
     this.laps = const [],
     this.circuit = Circuit.empty,
     this.kart = Kart.empty,
@@ -10,9 +10,9 @@ class CreateSessionState extends Equatable {
     this.weather = const {},
     this.feeling = '',
     this.trackState = '',
+    this.status = CreateSessionStatus.initial, 
   });
 
-  final int step;
   final List<Lap> laps;
   final Circuit circuit;
   final Kart kart;
@@ -20,9 +20,9 @@ class CreateSessionState extends Equatable {
   final Map<String, dynamic> weather;
   final String feeling;
   final String trackState;
+  final CreateSessionStatus status;
 
   CreateSessionState copyWith({
-    int? step,
     List<Lap>? laps,
     Circuit? circuit,
     Kart? kart,
@@ -30,9 +30,9 @@ class CreateSessionState extends Equatable {
     Map<String, dynamic>? weather,
     String? feeling,
     String? trackState,
+    CreateSessionStatus? status,
   }) {
     return CreateSessionState(
-      step: step ?? this.step,
       laps: laps ?? this.laps,
       circuit: circuit ?? this.circuit,
       kart: kart ?? this.kart,
@@ -40,9 +40,10 @@ class CreateSessionState extends Equatable {
       weather: weather ?? this.weather,
       feeling: feeling ?? this.feeling,
       trackState: trackState ?? this.trackState,
+      status: status ?? this.status,
     );
   }
 
   @override
-  List<Object> get props => [step, laps, circuit, kart, note, weather, feeling, trackState];
+  List<Object> get props => [laps, circuit, kart, note, weather, feeling, trackState, status];
 }

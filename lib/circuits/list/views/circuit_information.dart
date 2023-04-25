@@ -1,5 +1,6 @@
 import 'package:circuit_repository/circuit_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:go_kart/app/app.dart';
 
 class CircuitInformations extends StatelessWidget {
   const CircuitInformations({super.key, required this.circuit});
@@ -9,9 +10,7 @@ class CircuitInformations extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(circuit.name),
-      ),
+      appBar: GoKartAppBar.appBar(circuit.name),
       floatingActionButton: FloatingActionButton(
         // @TODO - Update circuit informations
         onPressed: () => print('edit circuit'),

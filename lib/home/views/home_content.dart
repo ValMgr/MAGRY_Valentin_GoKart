@@ -10,7 +10,7 @@ class HomeContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(32),
         child: Align(
           alignment: const Alignment(0, -1 / 3),
           child: Column(

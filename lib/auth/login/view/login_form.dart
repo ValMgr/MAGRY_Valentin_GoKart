@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
+import 'package:go_kart/app/app.dart';
 import 'package:go_kart/auth/login/login.dart';
 import 'package:go_kart/auth/signup/signup.dart';
 import 'package:quickalert/quickalert.dart';
@@ -111,6 +112,7 @@ class _LoginButton extends StatelessWidget {
             : ElevatedButton(
                 key: const Key('loginForm_continue_raisedButton'),
                 onPressed: state.status.isValidated ? () => context.read<LoginCubit>().logInWithCredentials() : null,
+                style: GoKartButtons.elevatedButton,
                 child: const Text('Login'),
               );
       },

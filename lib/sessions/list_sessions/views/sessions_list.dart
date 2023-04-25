@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_kart/sessions/list_sessions/cubit/list_sessions_cubit.dart';
+import 'package:go_kart/sessions/single_session/single_session.dart';
 
 class SessionsList extends StatelessWidget {
   const SessionsList({super.key});
@@ -20,6 +21,16 @@ class SessionsList extends StatelessWidget {
           subtitle: Text(
             'Laps: ${session.laps.length} - Il y a $timeSinceSession',
           ),
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute<SingleSessionView>(
+                builder: (_) => BlocProvider.value(
+                  value: context.read<ListSessionsCubit>(),
+                  child: SingleSessionView(sessionId: session.id!),
+                ),
+              ),
+            );
+          },
         );
       },
     );

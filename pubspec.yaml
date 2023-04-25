@@ -35,6 +35,7 @@ dependencies:
   session_repository:
     path: packages/session_repository
   supabase_flutter: ^1.2.2
+  syncfusion_flutter_charts: ^21.1.41
 
 dev_dependencies:
   bloc_test: ^9.1.0

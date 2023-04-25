@@ -11,6 +11,7 @@ class CreateCircuitPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Create circuit'),
+        elevation: 4,
       ),
       body: SafeArea(
         child: Padding(

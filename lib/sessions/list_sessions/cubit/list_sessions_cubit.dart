@@ -28,4 +28,16 @@ class ListSessionsCubit extends Cubit<ListSessionsState> {
       );
     }
   }
+
+  void removeSession(int sessionId) {
+    if (state.sessions.isEmpty) return;
+
+    final sessions = state.sessions.where((session) => session.id != sessionId).toList();
+    emit(state.copyWith(sessions: sessions));
+  }
+
+  void addSession(Session session) {
+    emit(state.copyWith(sessions: [session, ...state.sessions]));
+  }
+
 }

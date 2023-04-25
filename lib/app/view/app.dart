@@ -41,7 +41,7 @@ class AppView extends StatelessWidget {
     return MaterialApp(
       title: 'Kirac',
       theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
-      darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
+      // darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
       home: FlowBuilder<AppStatus>(
         state: context.select((AppBloc bloc) => bloc.state.status),
         onGeneratePages: onGenerateAppViewPages,

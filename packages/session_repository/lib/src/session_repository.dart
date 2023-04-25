@@ -23,6 +23,21 @@ class SessionRepository {
     }
   }
 
+  Future<Session> findOneSession(int id) async {
+    try {
+      final data = await _supabaseClient
+          .from('session')
+          .select(
+            '*, lap(*), kart(*), circuit(*)',
+          )
+          .eq('id', id);
+
+      return Session.fromJsonList(data as List).first;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   /// Create a new [Session].
   Future<void> createSession(Session session) async {
     try {
@@ -39,6 +54,15 @@ class SessionRepository {
     }
   }
 
+  /// Delete a [Session].
+  Future<void> deleteSession(int id) async {
+    try {
+      await _supabaseClient.from('session').delete().eq('id', id);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   /// Returns a list of [Kart]s
   /// Used to populate the dropdown menu
   // @TODO: move this to a kart repository
@@ -51,4 +75,5 @@ class SessionRepository {
       rethrow;
     }
   }
+
 }

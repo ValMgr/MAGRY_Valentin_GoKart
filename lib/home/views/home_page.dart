@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_kart/app/theme/theme.dart';
 import 'package:go_kart/home/home.dart';
 
 class HomePage extends StatelessWidget {
@@ -24,12 +25,7 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<HomeCubit, HomeState>(
       builder: (context, state) => Scaffold(
-        appBar: AppBar(
-          title: Text(state.pageName),
-          actions: const <Widget>[
-            SettingsButton(),
-          ],
-        ),
+        appBar: GoKartAppBar.appBar('Kirac'),
         bottomNavigationBar: AppBottomNavigationBar(currentIndex: state.currentPage),
         body: const HomeRouter(),
       ),
