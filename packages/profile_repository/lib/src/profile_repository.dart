@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:profile_repository/src/models/models.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -17,6 +19,19 @@ class ProfileRepository {
       return Profile.fromJson(data);
     } catch (e) {
       rethrow;
+    }
+  }
+
+  Future<String> uploadAvatar(File file) async {
+    try {
+      final extension = file.path.split('.').last;
+      final fileName = '${_supabaseClient.auth.currentUser!.id}-avatar.$extension';
+
+      await _supabaseClient.storage.from('avatars').remove([fileName]);
+      await _supabaseClient.storage.from('avatars').upload(fileName, file);
+      return _supabaseClient.storage.from('avatars').getPublicUrl(fileName);
+    } catch (e) {
+      throw Exception('Error uploading avatar: $e');
     }
   }
 

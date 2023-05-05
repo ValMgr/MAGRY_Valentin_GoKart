@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:profile_repository/profile_repository.dart';
@@ -34,7 +36,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   Future<void> updateProfile() async {
     emit(state.copyWith(status: ProfileStatus.loading));
     try {
-      final profile = Profile(
+      var profile = Profile(
         id: _userId,
         email: state.email,
         avatar: state.avatar,
@@ -44,6 +46,17 @@ class ProfileCubit extends Cubit<ProfileState> {
         birthday: state.birthday,
         isSetup: true,
       );
+
+      if (File(profile.avatar!).isAbsolute) {
+        try {
+          final avatar = await _profileRepository.uploadAvatar(File(profile.avatar!));
+          profile = profile.copyWith(avatar: avatar);
+
+        } catch (e) {
+          throw Exception('Failed to upload avatar');
+        }
+      }
+
       await _profileRepository.updateProfile(profile);
       emit(state.copyWith(status: ProfileStatus.success));
     } on Exception catch (_) {

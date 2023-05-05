@@ -1,3 +1,4 @@
+// ignore_for_file:  sort_constructors_first
 // ignore_for_file: avoid_dynamic_calls
 // ignore_for_file: public_member_api_docs
 
@@ -41,6 +42,8 @@ class Profile extends Equatable {
     };
   }
 
+  
+
   final String id;
   final String email;
   final String? username;
@@ -63,6 +66,27 @@ class Profile extends Equatable {
   bool get isSetupCompleted => isSetup;
 
   @override
-  List<Object?> get props =>
-      [id, email, username, avatar, firstname, lastname, birthday, isSetup];
+  List<Object?> get props => [id, email, username, avatar, firstname, lastname, birthday, isSetup];
+
+  Profile copyWith({
+    String? id,
+    String? email,
+    String? username,
+    String? avatar,
+    String? firstname,
+    String? lastname,
+    DateTime? birthday,
+    bool? isSetup,
+  }) {
+    return Profile(
+      id: id ?? this.id,
+      email: email ?? this.email,
+      username: username ?? this.username,
+      avatar: avatar ?? this.avatar,
+      firstname: firstname ?? this.firstname,
+      lastname: lastname ?? this.lastname,
+      birthday: birthday ?? this.birthday,
+      isSetup: isSetup ?? this.isSetup,
+    );
+  }
 }

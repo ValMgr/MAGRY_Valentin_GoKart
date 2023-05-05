@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_kart/app/app.dart';
@@ -27,6 +29,7 @@ class ProfileOverviewContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<ProfileCubit>();
+
     return BlocConsumer<ProfileCubit, ProfileState>(
       listener: (context, state) {
         if (state.status == ProfileStatus.success && !state.isSetup && !EditProfile.isEditModalOpened) {
@@ -41,8 +44,9 @@ class ProfileOverviewContent extends StatelessWidget {
                 EditProfile.isEditModalOpened = true;
                 showModalBottomSheet<void>(
                   context: context,
-                  builder: (context) => EditProfile(
-                    cubit: cubit,
+                  builder: (ctx) => BlocProvider.value(
+                    value: context.read<ProfileCubit>(),
+                    child: const EditProfile(),
                   ),
                 );
               }
@@ -107,12 +111,13 @@ Widget _avatarPreview(BuildContext context) {
   return CircleAvatar(
     radius: 30,
     backgroundColor: Theme.of(context).colorScheme.primary,
-    child: avatar != ''
-        ? Image.network(avatar)
-        : const Icon(
+    backgroundImage: AvatarUtils.display(avatar),
+    child: avatar == ''
+        ? const Icon(
             Icons.person,
             color: Colors.white,
-          ),
+          )
+        : null,
   );
 }
 
@@ -127,7 +132,10 @@ Widget _buildEditProfile(BuildContext context, ProfileCubit cubit) {
     onPressed: () => {
       showModalBottomSheet<void>(
         context: context,
-        builder: (context) => EditProfile(cubit: cubit),
+        builder: (ctx) => BlocProvider.value(
+          value: context.read<ProfileCubit>(),
+          child: const EditProfile(),
+        ),
       )
     },
   );

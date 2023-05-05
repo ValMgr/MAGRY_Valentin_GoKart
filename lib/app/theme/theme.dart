@@ -8,7 +8,9 @@ class GoKartButtons {
     minimumSize: const Size(double.infinity, 50),
     backgroundColor: const Color.fromARGB(255, 255, 179, 0),
     foregroundColor: Colors.white,
+    elevation: 2,
   );
+
 }
 
 class GoKartAppBar {

@@ -1,11 +1,17 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_kart/app/theme/theme.dart';
 import 'package:go_kart/profile/profile.dart';
+import 'package:image_picker/image_picker.dart';
 
 class EditProfile extends StatefulWidget {
-  const EditProfile({super.key, this.cubit});
+  const EditProfile({
+    super.key,
+  });
 
   static bool isEditModalOpened = false;
-  final ProfileCubit? cubit;
 
   @override
   State<EditProfile> createState() => _EditProfileState();
@@ -14,7 +20,7 @@ class EditProfile extends StatefulWidget {
 class _EditProfileState extends State<EditProfile> {
   @override
   Widget build(BuildContext context) {
-    final cubit = widget.cubit!;
+    final cubit = context.read<ProfileCubit>();
     final profile = cubit.state;
 
     return Scaffold(
@@ -44,21 +50,18 @@ class _EditProfileState extends State<EditProfile> {
               ),
             ),
             Column(
-              children: [
-                const Text('Edit Profile'),
-                const SizedBox(height: 16),
-                _avatarEditField(
-                  profile.avatar,
-                  Theme.of(context).colorScheme.primary,
-                ),
-                const SizedBox(height: 16),
-                _usernameEditField(profile.username, cubit.usernameChanged),
-                const SizedBox(height: 16),
-                _firstnameEditField(profile.firstname, cubit.firstnameChanged),
-                const SizedBox(height: 16),
-                _lastnameEditField(profile.lastname, cubit.lastnameChanged),
-                const SizedBox(height: 16),
-                _birthdayEditField(profile.birthday, cubit.birthdayChanged),
+              children: const [
+                Text('Edit Profile'),
+                SizedBox(height: 16),
+                AvatarEditField(),
+                SizedBox(height: 16),
+                UsernameEditField(),
+                SizedBox(height: 16),
+                FirstnameEditField(),
+                SizedBox(height: 16),
+                LastnameEditField(),
+                SizedBox(height: 16),
+                BirthdayEditField(),
               ],
             )
           ],
@@ -68,38 +71,117 @@ class _EditProfileState extends State<EditProfile> {
   }
 }
 
-Widget _avatarEditField(String avatar, Color defaultBackground) {
-  return GestureDetector(
-    onTap: () => print('Import image'),
-    child: CircleAvatar(
-      radius: 30,
-      backgroundColor: defaultBackground,
-      child: Stack(
-        children: [if (avatar != '') Image.network(avatar), const Icon(Icons.add_a_photo, color: Colors.white)],
+class AvatarEditField extends StatelessWidget {
+  const AvatarEditField({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final cubit = context.read<ProfileCubit>();
+
+    return GestureDetector(
+      onTap: () => {
+        // open dialog to choose image from gallery or camera
+        showDialog<void>(
+          context: context,
+          builder: (BuildContext context) => AlertDialog(
+            title: const Text('Choose image from'),
+            content: Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      await pickImageFromGallery(ImageSource.camera, cubit);
+                      // Navigator.of(context).pop();
+                    },
+                    style: GoKartButtons.elevatedButton,
+                    child: const Text('Camera'),
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      await pickImageFromGallery(ImageSource.gallery, cubit);
+                      Navigator.of(context).pop();
+                    },
+                    style: GoKartButtons.elevatedButton,
+                    child: const Text('Gallery'),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      },
+      child: BlocBuilder<ProfileCubit, ProfileState>(
+        builder: (context, state) {
+          return CircleAvatar(
+            radius: 30,
+            backgroundColor: Theme.of(context).colorScheme.primary,
+            backgroundImage: AvatarUtils.display(state.avatar),
+            child: Stack(
+              children: const [
+                Icon(Icons.add_a_photo, color: Colors.white),
+              ],
+            ),
+          );
+        },
       ),
-    ),
-  );
+    );
+  }
+
+  Future<void> pickImageFromGallery(ImageSource source, ProfileCubit cubit) async {
+    try {
+      final image = await ImagePicker().pickImage(source: source);
+
+      if (image == null) return;
+
+      cubit.avatarChanged(image.path);
+      // return File(image.path);
+    } on Exception catch (e) {
+      throw Exception('Error picking image: $e');
+    }
+  }
 }
 
-Widget _usernameEditField(String username, Function onChange) {
-  return TextFormField(
-    initialValue: username,
-    decoration: const InputDecoration(
-      labelText: 'Username',
-    ),
-    validator: (value) {
-      if (value == null || value.isEmpty) {
-        return 'Please enter some text';
-      }
-      return null;
-    },
-    onChanged: (value) => onChange(value),
-  );
+class UsernameEditField extends StatelessWidget {
+  const UsernameEditField({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final cubit = context.read<ProfileCubit>();
+
+    return TextFormField(
+      initialValue: cubit.state.username,
+      decoration: const InputDecoration(
+        labelText: 'Username',
+      ),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Please enter some text';
+        }
+        return null;
+      },
+      onChanged: cubit.usernameChanged,
+    );
+  }
 }
 
-Widget _firstnameEditField(String? firstname, Function onChange) {
-  return TextFormField(
-      initialValue: firstname,
+class FirstnameEditField extends StatelessWidget {
+  const FirstnameEditField({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final cubit = context.read<ProfileCubit>();
+
+    return TextFormField(
+      initialValue: cubit.state.firstname,
       decoration: const InputDecoration(
         labelText: 'Firstname',
       ),
@@ -109,31 +191,49 @@ Widget _firstnameEditField(String? firstname, Function onChange) {
         }
         return null;
       },
-      onChanged: (value) => onChange(value));
+      onChanged: cubit.firstnameChanged,
+    );
+  }
 }
 
-Widget _lastnameEditField(String? lastname, Function onChange) {
-  return TextFormField(
-    initialValue: lastname,
-    decoration: const InputDecoration(
-      labelText: 'Lastname',
-    ),
-    validator: (value) {
-      if (value == null || value.isEmpty) {
-        return 'Please enter some text';
-      }
-      return null;
-    },
-    onChanged: (value) => onChange(value),
-  );
+class LastnameEditField extends StatelessWidget {
+  const LastnameEditField({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final cubit = context.read<ProfileCubit>();
+    return TextFormField(
+      initialValue: cubit.state.lastname,
+      decoration: const InputDecoration(
+        labelText: 'Lastname',
+      ),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Please enter some text';
+        }
+        return null;
+      },
+      onChanged: cubit.lastnameChanged,
+    );
+  }
 }
 
-Widget _birthdayEditField(DateTime? birthday, Function onChange) {
-  return InputDatePickerFormField(
-    fieldLabelText: 'Birthdayyyy',
-    firstDate: DateTime(1900),
-    lastDate: DateTime(2100),
-    initialDate: birthday ?? DateTime.now(),
-    onDateSubmitted: (value) => onChange(value),
-  );
+class BirthdayEditField extends StatelessWidget {
+  const BirthdayEditField({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final cubit = context.read<ProfileCubit>();
+    return InputDatePickerFormField(
+      fieldLabelText: 'Birthday',
+      firstDate: DateTime(1900),
+      lastDate: DateTime(2100),
+      initialDate: cubit.state.birthday ?? DateTime.now(),
+      onDateSubmitted: cubit.birthdayChanged,
+    );
+  }
 }
