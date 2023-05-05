@@ -71,6 +71,7 @@ class CreateSessionView extends StatelessWidget {
                     ),
                   ),
                 ),
+                const SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () => _createSession(context, state),
                   style: GoKartButtons.elevatedButton,
@@ -126,15 +127,6 @@ class FirstStepView extends StatelessWidget {
     return Center(
       child: Column(
         children: [
-          // ElevatedButton(
-          //   onPressed: () => changeStep(2),
-          //   child: Row(
-          //     children: const [
-          //       Text('Session details'),
-          //       Icon(Icons.arrow_forward),
-          //     ],
-          //   ),
-          // ),
           const SizedBox(height: 16),
           Expanded(
             child: LapsList(

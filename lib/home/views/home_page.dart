@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_kart/app/theme/theme.dart';
+import 'package:go_kart/app/app.dart';
 import 'package:go_kart/home/home.dart';
 
 class HomePage extends StatelessWidget {
@@ -25,7 +25,15 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<HomeCubit, HomeState>(
       builder: (context, state) => Scaffold(
-        appBar: GoKartAppBar.appBar('Kirac'),
+        appBar: GoKartAppBar.appBar(
+          'Kirac',
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.logout),
+              onPressed: () => context.read<AppBloc>().add(const AppLogoutRequested()),
+            ),
+          ],
+        ),
         bottomNavigationBar: AppBottomNavigationBar(currentIndex: state.currentPage),
         body: const HomeRouter(),
       ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_kart/charts/overview/overview.dart';
 import 'package:go_kart/profile/profile.dart';
 import 'package:go_kart/sessions/sessions.dart';
 
@@ -18,8 +17,6 @@ class HomeContent extends StatelessWidget {
               ProfileOveriew(),
               SizedBox(height: 32),
               SessionOverview(),
-              SizedBox(height: 32),
-              ChartsOverview(),
             ],
           ),
         ),

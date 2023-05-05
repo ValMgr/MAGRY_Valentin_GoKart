@@ -13,7 +13,6 @@ class AppBottomNavigationBar extends StatelessWidget {
     final pageName = [
       'Session',
       'Home',
-      'Progression',
       'Circuits',
     ];
 
@@ -34,14 +33,10 @@ class AppBottomNavigationBar extends StatelessWidget {
               icon: const Icon(Icons.home_rounded),
               label: pageName[1],
             ),
-            BottomNavigationBarItem(
-              icon: const Icon(Icons.show_chart_rounded),
-              label: pageName[2],
-            ),
             if (context.read<AppBloc>().state.isAdmin)
               BottomNavigationBarItem(
                 icon: const Icon(Icons.all_inclusive_rounded),
-                label: pageName[3],
+                label: pageName[2],
               ),
           ],
         );

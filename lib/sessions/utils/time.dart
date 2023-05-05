@@ -8,9 +8,10 @@ class TimeUtils {
   }
 
   static String formatDuration(int duration) {
-    final minutes = (duration / 60000).floor();
-    final seconds = ((duration % 60000) / 1000).floor();
+    final minutes = (duration / 1000 / 60).floor();
+    final seconds = ((duration / 1000) % 60).floor();
     final milliseconds = duration % 1000;
-    return '$minutes:$seconds.$milliseconds';
+
+    return '${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}:${milliseconds.toString().padLeft(3, '0')}';
   }
 }

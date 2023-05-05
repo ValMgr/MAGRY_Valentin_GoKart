@@ -1,6 +1,7 @@
 import 'package:circuit_repository/circuit_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_kart/app/theme/theme.dart';
 import 'package:go_kart/circuits/circuits.dart';
 
 class CreateCircuitPage extends StatelessWidget {
@@ -9,10 +10,7 @@ class CreateCircuitPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Create circuit'),
-        elevation: 4,
-      ),
+      appBar: GoKartAppBar.appBar('Create circuit'),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16),

@@ -1,6 +1,7 @@
 import 'package:circuit_repository/circuit_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_kart/extensions/string.dart';
 import 'package:go_kart/sessions/sessions.dart';
 import 'package:session_repository/session_repository.dart';
 
@@ -10,7 +11,6 @@ class SessionDetailsForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<CreateSessionCubit>();
-    const weather = ['Sunny', 'Cloudy', 'Rainy', 'Snowy', 'Windy'];
 
     return FutureBuilder(
       future: Future.wait([cubit.getCircuits(), cubit.getKarts()]),
@@ -86,12 +86,12 @@ class SessionDetailsForm extends StatelessWidget {
                         labelText: 'Weather',
                       ),
                       icon: const Icon(Icons.arrow_downward),
-                      items: weather.map((weather) {
+                      items: Weather.values.map((weather) {
                         return DropdownMenuItem(
-                          value: weather,
+                          value: weather.name.capitalize(),
                           child: SizedBox(
                             child: Text(
-                              weather,
+                              weather.name.capitalize(),
                               textAlign: TextAlign.center,
                             ),
                           ),
