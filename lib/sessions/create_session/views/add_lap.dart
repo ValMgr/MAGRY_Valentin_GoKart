@@ -5,21 +5,22 @@ import 'package:go_kart/sessions/create_session/cubit/create_session_cubit.dart'
 import 'package:session_repository/session_repository.dart';
 
 class AddLap extends StatefulWidget {
-  AddLap({
+  const AddLap({
     super.key,
     required this.cubit,
   });
 
   final CreateSessionCubit cubit;
-  int minutes = 0;
-  int seconds = 0;
-  int milliseconds = 0;
 
   @override
   State<AddLap> createState() => _AddLapState();
 }
 
 class _AddLapState extends State<AddLap> {
+  int minutes = 0;
+  int seconds = 0;
+  int milliseconds = 0;
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -54,7 +55,7 @@ class _AddLapState extends State<AddLap> {
           TextFormField(
             keyboardType: TextInputType.number,
             inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(2)],
-            onChanged: (value) => widget.minutes = int.tryParse(value) ?? 0,
+            onChanged: (value) => setState(() => minutes = int.tryParse(value) ?? 0),
           ),
           const Text('Minutes'),
         ],
@@ -69,7 +70,7 @@ class _AddLapState extends State<AddLap> {
           TextFormField(
             keyboardType: TextInputType.number,
             inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(2)],
-            onChanged: (value) => widget.seconds = int.tryParse(value) ?? 0,
+            onChanged: (value) => setState(() => seconds = int.tryParse(value) ?? 0),
           ),
           const Text('Seconds'),
         ],
@@ -84,7 +85,7 @@ class _AddLapState extends State<AddLap> {
           TextFormField(
             keyboardType: TextInputType.number,
             inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(3)],
-            onChanged: (value) => widget.milliseconds = int.tryParse(value) ?? 0,
+            onChanged: (value) => setState(() => milliseconds = int.tryParse(value) ?? 0),
           ),
           const Text('Milliseconds'),
         ],
@@ -97,8 +98,7 @@ class _AddLapState extends State<AddLap> {
       onPressed: () {
         widget.cubit.addLap(
           Lap(
-            duration: Duration(minutes: widget.minutes, seconds: widget.seconds, milliseconds: widget.milliseconds)
-                .inMilliseconds,
+            duration: Duration(minutes: minutes, seconds: seconds, milliseconds: milliseconds).inMilliseconds,
           ),
         );
         Navigator.pop(context);

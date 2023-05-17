@@ -4,7 +4,6 @@ import 'package:go_kart/sessions/sessions.dart';
 import 'package:quickalert/quickalert.dart';
 import 'package:session_repository/session_repository.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
 class SingleSessionView extends StatelessWidget {
   const SingleSessionView({super.key, required this.sessionId});
@@ -74,7 +73,7 @@ class SingleSesionContent extends StatelessWidget {
             child: Center(
               child: BlocBuilder<SingleSessionCubit, SingleSessionState>(
                 builder: (context, state) {
-                  List<LapData> data = LapsUtils.toLapsData(state.session.laps);
+                  final data = LapsUtils.toLapsData(state.session.laps);
 
                   if (state.session == Session.empty) {
                     return const Center(
@@ -116,7 +115,7 @@ class SingleSesionContent extends StatelessWidget {
                       Center(
                         child: SfCartesianChart(
                           onDataLabelRender: (DataLabelRenderArgs args) {
-                            args.text = data[args.pointIndex! as int].display;
+                            args.text = data[args.pointIndex!].display;
                           },
                           onTooltipRender: (TooltipArgs args) {
                             args.text = data[args.pointIndex! as int].display;

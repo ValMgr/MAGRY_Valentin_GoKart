@@ -59,8 +59,6 @@ class CreateSessionView extends StatelessWidget {
                             FirstStepView(
                               state: state,
                             ),
-                            // @TODO Load necessary data before displaying the second step
-                            // to avoid the state to reset when changing tabs
                             SecondStepView(
                               state: state,
                             ),

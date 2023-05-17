@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_kart/app/theme/theme.dart';
@@ -21,7 +19,6 @@ class _EditProfileState extends State<EditProfile> {
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<ProfileCubit>();
-    final profile = cubit.state;
 
     return Scaffold(
       body: Padding(
@@ -71,11 +68,16 @@ class _EditProfileState extends State<EditProfile> {
   }
 }
 
-class AvatarEditField extends StatelessWidget {
+class AvatarEditField extends StatefulWidget {
   const AvatarEditField({
     super.key,
   });
 
+  @override
+  State<AvatarEditField> createState() => _AvatarEditFieldState();
+}
+
+class _AvatarEditFieldState extends State<AvatarEditField> {
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<ProfileCubit>();
@@ -104,6 +106,7 @@ class AvatarEditField extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: () async {
                       await pickImageFromGallery(ImageSource.gallery, cubit);
+                      if (!mounted) return;
                       Navigator.of(context).pop();
                     },
                     style: GoKartButtons.elevatedButton,

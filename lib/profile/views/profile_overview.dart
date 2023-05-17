@@ -1,30 +1,10 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_kart/app/app.dart';
 import 'package:go_kart/profile/profile.dart';
-import 'package:profile_repository/profile_repository.dart';
 import 'package:quickalert/quickalert.dart';
 
 class ProfileOveriew extends StatelessWidget {
   const ProfileOveriew({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    // @TODO :
-    return BlocProvider(
-      create: (_) => ProfileCubit(
-        ProfileRepository(),
-        context.read<AppBloc>().state.user!.id,
-      )..getProfile(),
-      child: const ProfileOverviewContent(),
-    );
-  }
-}
-
-class ProfileOverviewContent extends StatelessWidget {
-  const ProfileOverviewContent({super.key});
 
   @override
   Widget build(BuildContext context) {

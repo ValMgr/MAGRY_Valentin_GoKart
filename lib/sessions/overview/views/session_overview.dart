@@ -8,22 +8,22 @@ class SessionOverview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => SessionOverviewCubit()..getLastSession(),
-      child: const SessionOverviewContent(),
-    );
-  }
-}
-
-class SessionOverviewContent extends StatelessWidget {
-  const SessionOverviewContent({super.key});
-
-  @override
-  Widget build(BuildContext context) {
     return BlocBuilder<SessionOverviewCubit, SessionOverviewState>(
       builder: (context, state) {
-        if (state.session == Session.empty) {
+        if (state.status == SessionOverviewStatus.loading) {
           return const Center(child: CircularProgressIndicator());
+        }
+
+        if (state.status == SessionOverviewStatus.failure) {
+          return const Center(
+            child: Text('An error occured !'),
+          );
+        }
+
+        if (state.status == SessionOverviewStatus.success && state.session == Session.empty) {
+          return const Center(
+            child: Text('No sessions found !'),
+          );
         }
 
         return SizedBox(
@@ -58,7 +58,8 @@ class SessionOverviewContent extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                          'Fastest lap: ${TimeUtils.formatDuration(LapsUtils.getBestLap(state.session.laps).duration)}'),
+                        'Fastest lap: ${TimeUtils.formatDuration(LapsUtils.getBestLap(state.session.laps).duration)}',
+                      ),
                       const Spacer(),
                       Text('Laps count: ${state.session.laps.length}')
                     ],

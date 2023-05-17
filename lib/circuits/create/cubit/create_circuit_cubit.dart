@@ -5,12 +5,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 part 'create_circuit_state.dart';
 
 class CreateCircuitCubit extends Cubit<CreateCircuitState> {
-  CreateCircuitCubit(this.circuitRepository)
-      : super(const CreateCircuitState());
+  CreateCircuitCubit(this.circuitRepository) : super(const CreateCircuitState());
 
   final CircuitRepository circuitRepository;
 
-  Future<bool> createCircuit() async {
+  Future<void> createCircuit() async {
+    emit(state.copyWith(status: CreateCircuitStatus.submitting));
+
     try {
       final circuit = Circuit(
         name: state.name,
@@ -28,10 +29,10 @@ class CreateCircuitCubit extends Cubit<CreateCircuitState> {
       );
 
       await circuitRepository.createCircuit(circuit);
-      return true;
+      emit(state.copyWith(status: CreateCircuitStatus.success));
     } catch (e) {
-      emit(state.copyWith(failureMessage: e.toString()));
-      return false;
+      print(e);
+      emit(state.copyWith(status: CreateCircuitStatus.failure));
     }
   }
 
@@ -81,6 +82,10 @@ class CreateCircuitCubit extends Cubit<CreateCircuitState> {
 
   void websiteChanged(String website) {
     emit(state.copyWith(website: website));
+  }
+
+  void dismissError() {
+    emit(state.copyWith(status: CreateCircuitStatus.initial));
   }
 
   void reset() {

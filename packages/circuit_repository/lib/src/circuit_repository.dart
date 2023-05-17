@@ -1,3 +1,5 @@
+// ignore_for_file: inference_failure_on_function_invocation
+
 import 'package:circuit_repository/src/models/models.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 

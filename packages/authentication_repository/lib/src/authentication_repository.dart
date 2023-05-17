@@ -1,4 +1,4 @@
-// ignore_for_file: comment_references
+// ignore_for_file: comment_references, inference_failure_on_function_invocation
 
 import 'dart:async';
 

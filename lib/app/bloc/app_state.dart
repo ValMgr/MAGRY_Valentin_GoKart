@@ -12,8 +12,8 @@ class AppState extends Equatable {
     this.isAdmin = false,
   });
 
-  const AppState.authenticated(User user)
-      : this._(status: AppStatus.authenticated, user: user);
+  const AppState.authenticated(User user, { bool isAdmin = false})
+      : this._(status: AppStatus.authenticated, user: user, isAdmin: isAdmin);
 
   const AppState.unauthenticated() : this._(status: AppStatus.unauthenticated);
 

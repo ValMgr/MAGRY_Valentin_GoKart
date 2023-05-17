@@ -10,7 +10,18 @@ class SessionOverviewCubit extends Cubit<SessionOverviewState> {
   final SessionRepository _sessionRepository = SessionRepository();
 
   Future<void> getLastSession() async {
-    final lastSession = await _sessionRepository.getSessions().then((sessions) => sessions?.last);
-    emit(state.copyWith(session: lastSession));
+    try {
+      emit(state.copyWith(status: SessionOverviewStatus.loading));
+
+      final sessions = await _sessionRepository.getSessions();
+      if (sessions != null && sessions.isNotEmpty) {
+        final lastSession = sessions.last;
+        emit(state.copyWith(session: lastSession, status: SessionOverviewStatus.success));
+        return;
+      }
+      emit(state.copyWith(status: SessionOverviewStatus.success));
+    } catch (e) {
+      emit(state.copyWith(status: SessionOverviewStatus.failure));
+    }
   }
 }

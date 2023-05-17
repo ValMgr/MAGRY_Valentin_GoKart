@@ -1,5 +1,7 @@
 part of 'create_circuit_cubit.dart';
 
+enum CreateCircuitStatus { initial, submitting, success, failure }
+
 class CreateCircuitState extends Equatable {
   const CreateCircuitState({
     this.name = '',
@@ -14,7 +16,7 @@ class CreateCircuitState extends Equatable {
     this.email = '',
     this.telephone = '',
     this.website = '',
-    this.failureMessage,
+    this.status = CreateCircuitStatus.initial,
   });
 
   final String name;
@@ -29,8 +31,7 @@ class CreateCircuitState extends Equatable {
   final String email;
   final String telephone;
   final String website;
-
-  final String? failureMessage;
+  final CreateCircuitStatus status;
 
   CreateCircuitState copyWith({
     String? name,
@@ -45,7 +46,7 @@ class CreateCircuitState extends Equatable {
     String? email,
     String? telephone,
     String? website,
-    String? failureMessage,
+    CreateCircuitStatus? status,
   }) {
     return CreateCircuitState(
       name: name ?? this.name,
@@ -60,7 +61,7 @@ class CreateCircuitState extends Equatable {
       email: email ?? this.email,
       telephone: telephone ?? this.telephone,
       website: website ?? this.website,
-      failureMessage: failureMessage ?? this.failureMessage,
+      status: status ?? this.status,
     );
   }
 
@@ -78,6 +79,6 @@ class CreateCircuitState extends Equatable {
         email,
         telephone,
         website,
-        failureMessage,
+        status,
       ];
 }

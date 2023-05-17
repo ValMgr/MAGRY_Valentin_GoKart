@@ -1,3 +1,5 @@
+// ignore_for_file: inference_failure_on_function_invocation
+
 import 'dart:io';
 
 import 'package:profile_repository/src/models/models.dart';

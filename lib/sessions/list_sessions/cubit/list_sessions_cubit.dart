@@ -5,9 +5,9 @@ import 'package:session_repository/session_repository.dart';
 part 'list_sessions_state.dart';
 
 class ListSessionsCubit extends Cubit<ListSessionsState> {
-  ListSessionsCubit(this._sessionRepository) : super(const ListSessionsState());
+  ListSessionsCubit() : super(const ListSessionsState());
 
-  final SessionRepository _sessionRepository;
+  final SessionRepository _sessionRepository = SessionRepository();
 
   Future<void> getSessionsList() async {
     emit(state.copyWith(status: ListSessionsStatus.loading));

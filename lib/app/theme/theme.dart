@@ -16,7 +16,7 @@ class GoKartButtons {
 class GoKartAppBar {
   static AppBar appBar(String title, {List<Widget>? actions}) => AppBar(
         title: Text(title),
-        backgroundColor: Color.fromARGB(255, 255, 255, 255),
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         foregroundColor: Colors.black,
         elevation: 4,
         shadowColor: Colors.black,

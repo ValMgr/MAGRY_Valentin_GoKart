@@ -1,3 +1,4 @@
+import 'package:circuit_repository/circuit_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_kart/circuits/circuits.dart';
@@ -9,14 +10,38 @@ class CreateCircuitForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocListener<CreateCircuitCubit, CreateCircuitState>(
-      listener: (context, state) {
-        if (state.failureMessage != null) {
+      listener: (ctx, state) {
+        if (state.status == CreateCircuitStatus.failure) {
           QuickAlert.show(
-            context: context,
-            title: 'Error',
-            text: state.failureMessage,
+            context: ctx,
+            title: 'Oups !',
+            text: 'Could not create circuit',
             type: QuickAlertType.error,
+            onConfirmBtnTap: () {
+              context.read<CreateCircuitCubit>().dismissError();
+              Navigator.of(ctx, rootNavigator: true).pop();
+            },
           );
+        }
+
+        if (state.status == CreateCircuitStatus.success) {
+          context.read<CircuitsCubit>().addCircuitToList(
+                Circuit(
+                  name: state.name,
+                  location: state.location,
+                  country: state.country,
+                  countryCode: state.countryCode,
+                  length: state.length,
+                  address: state.address,
+                  corners: state.corners,
+                  lat: state.lat,
+                  lng: state.lng,
+                  email: state.email,
+                  telephone: state.telephone,
+                  website: state.website,
+                ),
+              );
+          Navigator.of(ctx).pop();
         }
       },
       child: Form(
@@ -62,16 +87,13 @@ class CreateCircuitForm extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () async {
-                final created = await context.read<CreateCircuitCubit>().createCircuit();
-                if (created) {
-                  // ignore: use_build_context_synchronously
-                  Navigator.of(context).pop();
-                }
-              },
-              child: const Text('Create circuit'),
-            )
+            if (context.read<CreateCircuitCubit>().state.status == CreateCircuitStatus.submitting)
+              const CircularProgressIndicator()
+            else
+              ElevatedButton(
+                onPressed: () => context.read<CreateCircuitCubit>().createCircuit(),
+                child: const Text('Create'),
+              )
           ],
         ),
       ),

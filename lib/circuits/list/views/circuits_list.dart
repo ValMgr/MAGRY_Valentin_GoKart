@@ -1,3 +1,4 @@
+import 'package:circuit_repository/circuit_repository.dart';
 import 'package:country_flags/country_flags.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -5,7 +6,7 @@ import 'package:go_kart/circuits/circuits.dart';
 import 'package:go_kart/circuits/list/views/circuit_information.dart';
 
 class CircuitsList extends StatelessWidget {
-  const CircuitsList({super.key});
+  CircuitsList({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -5,9 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 part 'circuits_state.dart';
 
 class CircuitsCubit extends Cubit<CircuitsListState> {
-  CircuitsCubit(this._circuitRepository) : super(const CircuitsListState());
+  CircuitsCubit() : super(const CircuitsListState());
 
-  final CircuitRepository _circuitRepository;
+  final CircuitRepository _circuitRepository = CircuitRepository();
 
   // @TODO - Update list when navigator pop
   // from circuit detail page or circuit create page
@@ -16,7 +16,7 @@ class CircuitsCubit extends Cubit<CircuitsListState> {
     try {
       final circuits = await _circuitRepository.getAllCircuits();
 
-      if (circuits == null) {
+      if (circuits.isEmpty) {
         emit(const CircuitsListState());
         return;
       }
@@ -30,9 +30,18 @@ class CircuitsCubit extends Cubit<CircuitsListState> {
     } on Exception catch (error) {
       emit(
         CircuitsListState(
-            errorMessages: error.toString(),
-            status: CircuitsListStatus.failure),
+          errorMessages: error.toString(),
+          status: CircuitsListStatus.failure,
+        ),
       );
     }
+  }
+
+  Future<void> addCircuitToList(Circuit circuit) async {
+    emit(
+      CircuitsListState(
+        circuits: List<Circuit>.from(state.circuits)..add(circuit),
+      ),
+    );
   }
 }

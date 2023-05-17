@@ -13,7 +13,7 @@ class CircuitInformations extends StatelessWidget {
       appBar: GoKartAppBar.appBar(circuit.name),
       floatingActionButton: FloatingActionButton(
         // @TODO - Update circuit informations
-        onPressed: () => print('edit circuit'),
+        onPressed: () {},
         child: const Icon(Icons.edit),
       ),
       body: SafeArea(

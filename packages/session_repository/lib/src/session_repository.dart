@@ -1,3 +1,5 @@
+// ignore_for_file: inference_failure_on_function_invocation, avoid_dynamic_calls
+
 import 'package:session_repository/session_repository.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' hide Session;
 
@@ -47,9 +49,7 @@ class SessionRepository {
       await _supabaseClient.from('lap').insert(
             session.laps.map((lap) => lap.copyWith(session: data[0]['id'] as int).toMap()).toList(),
           );
-    } catch (e, stacktrace) {
-      print(e);
-      print(stacktrace);
+    } catch (e) {
       rethrow;
     }
   }

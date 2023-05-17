@@ -96,13 +96,12 @@ class Circuit extends Equatable {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'id': id,
-      'createdAt': createdAt,
-      'createdBy': createdBy,
+      'created_at': createdAt,
+      'created_by': createdBy,
       'name': name,
       'location': location,
       'country': country,
-      'countryCode': countryCode,
+      'country_code': countryCode,
       'address': address,
       'lat': lat,
       'lng': lng,
