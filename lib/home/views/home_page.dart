@@ -29,7 +29,7 @@ class HomeView extends StatelessWidget {
     return BlocBuilder<HomeCubit, HomeState>(
       builder: (context, state) => Scaffold(
         appBar: GoKartAppBar.appBar(
-          'Kirac',
+          'Kirac - GoKart',
           actions: [
             IconButton(
               icon: const Icon(Icons.logout),
