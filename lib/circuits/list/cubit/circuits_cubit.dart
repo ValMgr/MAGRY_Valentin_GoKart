@@ -44,4 +44,14 @@ class CircuitsCubit extends Cubit<CircuitsListState> {
       ),
     );
   }
+
+  Future<void> deleteCircuit(Circuit circuit) async {
+    await _circuitRepository.deleteCircuit(circuit);
+
+    emit(
+      CircuitsListState(
+        circuits: List<Circuit>.from(state.circuits)..remove(circuit),
+      ),
+    );
+  }
 }

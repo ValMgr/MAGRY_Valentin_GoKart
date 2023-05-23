@@ -17,6 +17,7 @@ class CreateCircuitState extends Equatable {
     this.telephone = '',
     this.website = '',
     this.status = CreateCircuitStatus.initial,
+    this.created,
   });
 
   final String name;
@@ -32,6 +33,7 @@ class CreateCircuitState extends Equatable {
   final String telephone;
   final String website;
   final CreateCircuitStatus status;
+  final Circuit? created;
 
   CreateCircuitState copyWith({
     String? name,
@@ -47,6 +49,7 @@ class CreateCircuitState extends Equatable {
     String? telephone,
     String? website,
     CreateCircuitStatus? status,
+    Circuit? created,
   }) {
     return CreateCircuitState(
       name: name ?? this.name,
@@ -62,6 +65,7 @@ class CreateCircuitState extends Equatable {
       telephone: telephone ?? this.telephone,
       website: website ?? this.website,
       status: status ?? this.status,
+      created: created ?? this.created,
     );
   }
 
@@ -80,5 +84,6 @@ class CreateCircuitState extends Equatable {
         telephone,
         website,
         status,
+        created,
       ];
 }

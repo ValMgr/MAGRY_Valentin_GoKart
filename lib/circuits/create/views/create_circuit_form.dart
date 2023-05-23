@@ -1,4 +1,3 @@
-import 'package:circuit_repository/circuit_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_kart/circuits/circuits.dart';
@@ -24,23 +23,8 @@ class CreateCircuitForm extends StatelessWidget {
           );
         }
 
-        if (state.status == CreateCircuitStatus.success) {
-          context.read<CircuitsCubit>().addCircuitToList(
-                Circuit(
-                  name: state.name,
-                  location: state.location,
-                  country: state.country,
-                  countryCode: state.countryCode,
-                  length: state.length,
-                  address: state.address,
-                  corners: state.corners,
-                  lat: state.lat,
-                  lng: state.lng,
-                  email: state.email,
-                  telephone: state.telephone,
-                  website: state.website,
-                ),
-              );
+        if (state.status == CreateCircuitStatus.success && state.created != null) {
+          context.read<CircuitsCubit>().addCircuitToList(state.created!);
           Navigator.of(ctx).pop();
         }
       },

@@ -28,8 +28,8 @@ class CreateCircuitCubit extends Cubit<CreateCircuitState> {
         website: state.website,
       );
 
-      await circuitRepository.createCircuit(circuit);
-      emit(state.copyWith(status: CreateCircuitStatus.success));
+      final newCircuit = await circuitRepository.createCircuit(circuit);
+      emit(state.copyWith(status: CreateCircuitStatus.success, created: newCircuit));
     } catch (e) {
       print(e);
       emit(state.copyWith(status: CreateCircuitStatus.failure));

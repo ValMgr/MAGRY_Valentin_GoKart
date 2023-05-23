@@ -27,7 +27,10 @@ class CircuitsList extends StatelessWidget {
           subtitle: Text('${circuit.location} - ${circuit.country}'),
           onTap: () => Navigator.of(context).push(
             MaterialPageRoute<CircuitInformations>(
-              builder: (context) => CircuitInformations(circuit: circuit),
+              builder: (_) => BlocProvider.value(
+                value: context.read<CircuitsCubit>(),
+                child: CircuitInformations(circuit: circuit),
+              ),
             ),
           ),
         );
