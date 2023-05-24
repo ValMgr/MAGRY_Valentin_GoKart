@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:circuit_repository/circuit_repository.dart';
 import 'package:equatable/equatable.dart';

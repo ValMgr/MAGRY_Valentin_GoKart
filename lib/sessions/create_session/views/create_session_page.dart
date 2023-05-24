@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_kart/app/app.dart';
 import 'package:go_kart/sessions/sessions.dart';
 import 'package:quickalert/quickalert.dart';
-import 'package:session_repository/session_repository.dart';
 
 class CreateSessionPage extends StatelessWidget {
   const CreateSessionPage({super.key});

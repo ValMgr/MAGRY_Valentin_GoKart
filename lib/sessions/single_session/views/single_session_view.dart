@@ -31,7 +31,6 @@ class SingleSesionContent extends StatelessWidget {
     return BlocListener<SingleSessionCubit, SingleSessionState>(
       listener: (context, state) {
         if (state.status == SingleSessionStatus.deleted) {
-          print('delete from list');
           context.read<ListSessionsCubit>().deleteSession(state.session);
           Navigator.of(context).pop();
         }
