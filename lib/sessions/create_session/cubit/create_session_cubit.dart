@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:circuit_repository/circuit_repository.dart';
 import 'package:equatable/equatable.dart';
@@ -55,20 +57,30 @@ class CreateSessionCubit extends Cubit<CreateSessionState> {
   }
 
   Future<void> createSession() async {
-    final userId = _authenticationRepository.currentUser.id;
+    try {
+      emit(state.copyWith(status: CreateSessionStatus.submitting));
+      final userId = _authenticationRepository.currentUser.id;
 
-    final session = Session(
-      date: DateTime.now().toUtc(),
-      laps: state.laps,
-      circuit: state.circuit,
-      kart: state.kart,
-      note: state.note,
-      weather: state.weather,
-      feeling: state.feeling,
-      trackState: state.trackState,
-      userId: userId,
-    );
+      final session = Session(
+        date: DateTime.now().toUtc(),
+        laps: state.laps,
+        circuit: state.circuit,
+        kart: state.kart,
+        note: state.note,
+        weather: state.weather,
+        feeling: state.feeling,
+        trackState: state.trackState,
+        userId: userId,
+      );
 
-    await _sessionRepository.createSession(session);
+      final newSession = await _sessionRepository.createSession(session);
+      emit(state.copyWith(status: CreateSessionStatus.created, created: newSession));
+    } catch (e) {
+      emit(state.copyWith(status: CreateSessionStatus.failure));
+    }
+  }
+
+  void dismissError() {
+    emit(state.copyWith(status: CreateSessionStatus.initial));
   }
 }

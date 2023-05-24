@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_kart/app/app.dart';
 import 'package:go_kart/sessions/sessions.dart';
 import 'package:quickalert/quickalert.dart';
+import 'package:session_repository/session_repository.dart';
 
 class CreateSessionPage extends StatelessWidget {
   const CreateSessionPage({super.key});
@@ -22,14 +23,32 @@ class CreateSessionView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<CreateSessionCubit>();
-    return BlocBuilder<CreateSessionCubit, CreateSessionState>(
+    return BlocConsumer<CreateSessionCubit, CreateSessionState>(
       bloc: cubit,
+      listener: (context, state) {
+        if (state.status == CreateSessionStatus.failure) {
+          QuickAlert.show(
+            context: context,
+            title: 'Oups !',
+            text: 'Could not create session',
+            type: QuickAlertType.error,
+            onConfirmBtnTap: () {
+              context.read<CreateSessionCubit>().dismissError();
+              Navigator.of(context, rootNavigator: true).pop();
+            },
+          );
+        }
+
+        if (state.status == CreateSessionStatus.created && state.created != null) {
+          context.read<ListSessionsCubit>().addSessionToList(state.created!);
+          Navigator.of(context).pop();
+        }
+      },
       builder: (context, state) {
         return Scaffold(
           appBar: GoKartAppBar.appBar("It's light out and away we go!"),
           floatingActionButton: FloatingActionButton(
             onPressed: () {
-
               showModalBottomSheet<void>(
                 context: context,
                 builder: (context) => AddLap(
@@ -55,14 +74,15 @@ class CreateSessionView extends StatelessWidget {
                           tabs: [Tab(text: 'Laps'), Tab(text: 'Details')],
                         ),
                         Expanded(
-                          child: TabBarView(children: [
-                            FirstStepView(
-                              state: state,
-                            ),
-                            SecondStepView(
-                              state: state,
-                            ),
-                          ],
+                          child: TabBarView(
+                            children: [
+                              FirstStepView(
+                                state: state,
+                              ),
+                              SecondStepView(
+                                state: state,
+                              ),
+                            ],
                           ),
                         ),
                       ],
@@ -105,7 +125,6 @@ class CreateSessionView extends StatelessWidget {
       );
     } else {
       context.read<CreateSessionCubit>().createSession();
-      Navigator.of(context).pop();
     }
   }
 }

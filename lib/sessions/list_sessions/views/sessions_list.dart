@@ -4,7 +4,7 @@ import 'package:go_kart/sessions/list_sessions/cubit/list_sessions_cubit.dart';
 import 'package:go_kart/sessions/single_session/single_session.dart';
 
 class SessionsList extends StatelessWidget {
-  const SessionsList({super.key});
+  SessionsList({super.key});
 
   @override
   Widget build(BuildContext context) {

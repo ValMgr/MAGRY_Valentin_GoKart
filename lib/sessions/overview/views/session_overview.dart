@@ -52,14 +52,19 @@ class SessionOverview extends StatelessWidget {
                       const Spacer(),
                       Text(TimeUtils.formatDate(state.session.date)),
                       const Spacer(),
-                      Text(state.session.circuit.name),
+                      Flexible(
+                        child: Text(state.session.circuit.name),
+                      ),
                     ],
                   ),
                   Row(
                     children: [
-                      Text(
-                        'Fastest lap: ${TimeUtils.formatDuration(LapsUtils.getBestLap(state.session.laps).duration)}',
-                      ),
+                      if (state.session.laps.isNotEmpty)
+                        Text(
+                          'Fastest lap: ${TimeUtils.formatDuration(LapsUtils.getBestLap(state.session.laps).duration)}',
+                        )
+                      else
+                        const Text('Fastest lap: NT'),
                       const Spacer(),
                       Text('Laps count: ${state.session.laps.length}')
                     ],

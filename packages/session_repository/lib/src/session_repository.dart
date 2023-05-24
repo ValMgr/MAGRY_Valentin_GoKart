@@ -32,23 +32,27 @@ class SessionRepository {
           .select(
             '*, lap(*), kart(*), circuit(*)',
           )
-          .eq('id', id);
+          .eq('id', id)
+          .single();
 
-      return Session.fromJsonList(data as List).first;
+      return Session.fromJson(data);
     } catch (e) {
       rethrow;
     }
   }
 
   /// Create a new [Session].
-  Future<void> createSession(Session session) async {
+  Future<Session> createSession(Session session) async {
     try {
       final body = session.toMap();
-      final data = await _supabaseClient.from('session').insert(body).select('id');
+      final newSession =
+          await _supabaseClient.from('session').insert(body).select('*, lap(*), kart(*), circuit(*)').single();
 
-      await _supabaseClient.from('lap').insert(
-            session.laps.map((lap) => lap.copyWith(session: data[0]['id'] as int).toMap()).toList(),
-          );
+      await _supabaseClient
+          .from('lap')
+          .insert(session.laps.map((lap) => lap.copyWith(session: newSession['id'] as int).toMap()).toList());
+
+      return Session.fromJson(newSession);
     } catch (e) {
       rethrow;
     }
@@ -75,5 +79,4 @@ class SessionRepository {
       rethrow;
     }
   }
-
 }

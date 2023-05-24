@@ -29,15 +29,11 @@ class ListSessionsCubit extends Cubit<ListSessionsState> {
     }
   }
 
-  void removeSession(int sessionId) {
-    if (state.sessions.isEmpty) return;
-
-    final sessions = state.sessions.where((session) => session.id != sessionId).toList();
-    emit(state.copyWith(sessions: sessions));
+  Future<void> addSessionToList(Session session) async {
+    emit(ListSessionsState(sessions: List<Session>.from(state.sessions)..add(session)));
   }
 
-  void addSession(Session session) {
-    emit(state.copyWith(sessions: [session, ...state.sessions]));
+  Future<void> deleteSession(Session session) async {
+    emit(ListSessionsState(sessions: List<Session>.from(state.sessions)..remove(session)));
   }
-
 }

@@ -31,7 +31,9 @@ class SingleSesionContent extends StatelessWidget {
     return BlocListener<SingleSessionCubit, SingleSessionState>(
       listener: (context, state) {
         if (state.status == SingleSessionStatus.deleted) {
-          context.read<ListSessionsCubit>().removeSession(state.session.id!);
+          print('delete from list');
+          context.read<ListSessionsCubit>().deleteSession(state.session);
+          Navigator.of(context).pop();
         }
 
         if (state.status == SingleSessionStatus.failure) {
@@ -61,7 +63,6 @@ class SingleSesionContent extends StatelessWidget {
               onConfirmBtnTap: () {
                 context.read<SingleSessionCubit>().deleteSession();
                 Navigator.of(context, rootNavigator: true).pop();
-                Navigator.of(context).pop();
               },
             );
           },
@@ -108,47 +109,51 @@ class SingleSesionContent extends StatelessWidget {
                         children: [
                           const Icon(Icons.timer),
                           const SizedBox(width: 16),
-                          Text(TimeUtils.formatDuration(LapsUtils.getBestLap(state.session.laps).duration)),
+                          if (state.session.laps.isNotEmpty)
+                            Text(TimeUtils.formatDuration(LapsUtils.getBestLap(state.session.laps).duration))
+                          else
+                            const Text('No laps'),
                         ],
                       ),
                       const SizedBox(height: 16),
-                      Center(
-                        child: SfCartesianChart(
-                          onDataLabelRender: (DataLabelRenderArgs args) {
-                            args.text = data[args.pointIndex!].display;
-                          },
-                          onTooltipRender: (TooltipArgs args) {
-                            args.text = data[args.pointIndex! as int].display;
-                          },
-                          primaryXAxis: CategoryAxis(
-                            title: AxisTitle(text: 'Laps'),
-                          ),
-                          onTrackballPositionChanging: (TrackballArgs trackballArgs) {
-                            trackballArgs.chartPointInfo.label =
-                                data[trackballArgs.chartPointInfo.dataPointIndex!].display;
-                          },
-                          primaryYAxis: NumericAxis(
-                            axisLabelFormatter: (axisLabelRenderArgs) => ChartAxisLabel(
-                              TimeUtils.formatDuration(axisLabelRenderArgs.value.toInt()),
-                              const TextStyle(color: Colors.black),
+                      if (state.session.laps.isNotEmpty)
+                        Center(
+                          child: SfCartesianChart(
+                            onDataLabelRender: (DataLabelRenderArgs args) {
+                              args.text = data[args.pointIndex!].display;
+                            },
+                            onTooltipRender: (TooltipArgs args) {
+                              args.text = data[args.pointIndex! as int].display;
+                            },
+                            primaryXAxis: CategoryAxis(
+                              title: AxisTitle(text: 'Laps'),
                             ),
-                          ),
-                          tooltipBehavior: TooltipBehavior(
-                            enable: true,
-                          ),
-                          trackballBehavior: TrackballBehavior(
-                            enable: true,
-                            activationMode: ActivationMode.singleTap,
-                          ),
-                          series: [
-                            LineSeries<LapData, int>(
-                              dataSource: data,
-                              xValueMapper: (LapData lap, _) => lap.index,
-                              yValueMapper: (LapData lap, _) => lap.duration,
+                            onTrackballPositionChanging: (TrackballArgs trackballArgs) {
+                              trackballArgs.chartPointInfo.label =
+                                  data[trackballArgs.chartPointInfo.dataPointIndex!].display;
+                            },
+                            primaryYAxis: NumericAxis(
+                              axisLabelFormatter: (axisLabelRenderArgs) => ChartAxisLabel(
+                                TimeUtils.formatDuration(axisLabelRenderArgs.value.toInt()),
+                                const TextStyle(color: Colors.black),
+                              ),
                             ),
-                          ],
+                            tooltipBehavior: TooltipBehavior(
+                              enable: true,
+                            ),
+                            trackballBehavior: TrackballBehavior(
+                              enable: true,
+                              activationMode: ActivationMode.singleTap,
+                            ),
+                            series: [
+                              LineSeries<LapData, int>(
+                                dataSource: data,
+                                xValueMapper: (LapData lap, _) => lap.index,
+                                yValueMapper: (LapData lap, _) => lap.duration,
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
                     ],
                   );
                 },

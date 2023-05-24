@@ -18,7 +18,10 @@ class SessionPage extends StatelessWidget {
             onPressed: () {
               Navigator.of(context).push(
                 MaterialPageRoute<CreateSessionPage>(
-                  builder: (context) => const CreateSessionPage(),
+                  builder: (_) => BlocProvider.value(
+                    value: context.read<ListSessionsCubit>(),
+                    child: const CreateSessionPage(),
+                  ),
                 ),
               );
             },
@@ -61,7 +64,7 @@ class SessionPage extends StatelessWidget {
                 );
               }
 
-              return const SessionsList();
+              return SessionsList();
             },
           ),
         ),
