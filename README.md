@@ -30,8 +30,6 @@ The goal isn't to create a lot of features but to create a solid foundation for 
 - Error handling
 - Security
 
----
-
 ## Getting Started 🚀
 
 This project contains 3 flavors:
@@ -52,3 +50,12 @@ $ flutter run --flavor staging --target lib/main_staging.dart
 # Production
 $ flutter run --flavor production --target lib/main_production.dart
 ```
+
+_\*Go Kart works on iOS, Android, Web, and Windows._
+
+
+[license_badge]: https://img.shields.io/badge/license-MIT-blue.svg
+[license_link]: https://opensource.org/licenses/MIT
+[very_good_analysis_badge]: https://img.shields.io/badge/style-very_good_analysis-B22C89.svg
+[very_good_analysis_link]: https://pub.dev/packages/very_good_analysis
+[very_good_cli_link]: https://github.com/VeryGoodOpenSource/very_good_cli
