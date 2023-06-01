@@ -16,9 +16,12 @@ class SessionRepository {
   Future<List<Session>?> getSessions() async {
     try {
       // get all sessions and laps related to them
-      final data = await _supabaseClient.from('session').select(
+      final data = await _supabaseClient
+          .from('session')
+          .select(
             '*, lap(*), kart(*), circuit(*)',
-          );
+          )
+          .eq('user_id', _supabaseClient.auth.currentUser!.id);
       return Session.fromJsonList(data as List);
     } catch (e) {
       rethrow;
