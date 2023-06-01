@@ -5,12 +5,14 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
+import 'dart:async';
+
+import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_kart/app/app.dart';
 import 'package:go_kart/bootstrap.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
 
 const _requiredEnvVars = [
   'SUPABASE_URL',
@@ -32,5 +34,9 @@ Future<void> main() async {
     anonKey: dotenv.get('SUPABASE_ANON_KEY'),
   );
 
-  await bootstrap(() => const App());
+  final authenticationRepository = AuthenticationRepository();
+
+  await bootstrap(
+    () => App(authenticationRepository: authenticationRepository),
+  );
 }

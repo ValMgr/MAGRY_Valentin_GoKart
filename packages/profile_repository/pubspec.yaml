@@ -1,0 +1,13 @@
+name: profile_repository
+version: 1.0.0+1
+publish_to: none
+
+environment:
+  sdk: '>=2.18.0 <3.0.0'
+
+dependencies:
+  equatable: ^2.0.3
+  supabase_flutter: ^1.2.2
+
+dev_dependencies:
+  very_good_analysis: ^3.1.0
