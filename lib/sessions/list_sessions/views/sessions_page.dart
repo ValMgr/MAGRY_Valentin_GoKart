@@ -58,12 +58,6 @@ class SessionPage extends StatelessWidget {
                 );
               }
 
-              if (state.sessions.isEmpty && state.status == ListSessionsStatus.success) {
-                return const Center(
-                  child: Text('No sessions found !'),
-                );
-              }
-
               return SessionsList();
             },
           ),

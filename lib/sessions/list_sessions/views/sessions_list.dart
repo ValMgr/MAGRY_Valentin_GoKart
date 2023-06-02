@@ -10,6 +10,12 @@ class SessionsList extends StatelessWidget {
   Widget build(BuildContext context) {
     final sessions = context.read<ListSessionsCubit>().state.sessions;
 
+    if (sessions.isEmpty) {
+      return const Center(
+        child: Text('No sessions yet'),
+      );
+    }
+
     return ListView.builder(
       itemCount: sessions.length,
       itemBuilder: (context, index) {

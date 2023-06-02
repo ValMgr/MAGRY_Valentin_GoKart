@@ -51,11 +51,13 @@ class SessionRepository {
       final newSession =
           await _supabaseClient.from('session').insert(body).select('*, lap(*), kart(*), circuit(*)').single();
 
-      await _supabaseClient
+      final laps = await _supabaseClient
           .from('lap')
-          .insert(session.laps.map((lap) => lap.copyWith(session: newSession['id'] as int).toMap()).toList());
+          .insert(session.laps.map((lap) => lap.copyWith(session: newSession['id'] as int).toMap()).toList())
+          .select();
 
-      return Session.fromJson(newSession);
+      final created = Session.fromJson(newSession).copyWith(laps: Lap.fromJsonList(laps as List));
+      return created;
     } catch (e) {
       rethrow;
     }
