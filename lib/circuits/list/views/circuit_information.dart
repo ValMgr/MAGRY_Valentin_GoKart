@@ -19,8 +19,8 @@ class CircuitInformations extends StatelessWidget {
           QuickAlert.show(
             context: context,
             type: QuickAlertType.warning,
-            title: 'Delete session',
-            text: 'Are you sure you want to delete this session ?',
+            title: 'Delete circuit',
+            text: 'Are you sure you want to delete this circuit ?',
             confirmBtnText: 'Yes',
             cancelBtnText: 'No',
             showCancelBtn: true,
